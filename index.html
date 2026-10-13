@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How Erber Auto's systems fit together</title>
+<meta name="description" content="A plain-language tour of the software, office computer, and AI assistants behind Erber Auto, an independent repair shop in Moscow, Idaho.">
+<link rel="preload" href="assets/fonts/GeneralSans-Semibold.otf" as="font" type="font/otf" crossorigin>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip" href="#flow">Skip to the diagram</a>
+
+<header class="hero">
+  <div class="wrap">
+    <img class="logo" src="assets/erber-logo-white.png" width="240" height="33" alt="Erber Auto">
+    <h1>How our systems fit together</h1>
+    <p class="lede">Erber Auto is an independent repair shop in Moscow, Idaho. Behind the front counter there's one official record, one always-on office computer, and a small team of AI assistants. People make every decision that matters. Here's the whole picture, without the jargon.</p>
+  </div>
+</header>
+
+<main>
+  <section class="flow-sec" id="flow" aria-labelledby="flow-h">
+    <div class="wrap">
+      <h2 id="flow-h">The short version</h2>
+      <p class="intro">Shop records start in Shopmonkey. The office PC keeps a local copy, cleans it up, and feeds the tools the team uses all day. AI assistants help build and run it all, and a person signs off on anything important.</p>
+
+      <figure class="diagram">
+        <svg class="wide" viewBox="0 0 1000 440" role="img" aria-labelledby="dg-t dg-d">
+          <title id="dg-t">How information moves at Erber Auto</title>
+          <desc id="dg-d">Shopmonkey sends shop records to the office PC. On the PC, ErberData keeps a local copy, the shop data model cleans it, and office tools use it to help the shop team. The AI assistant team builds and runs these tools, and people approve merges, deploys, sends, and spending.</desc>
+          <defs>
+            <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#0F2F66"/></marker>
+            <marker id="ahr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#C42610"/></marker>
+          </defs>
+          <!-- PC zone -->
+          <rect x="200" y="20" width="600" height="250" rx="16" class="zone"/>
+          <text x="220" y="50" class="zl">The office PC · always on, at the shop</text>
+          <!-- Shopmonkey -->
+          <rect x="20" y="105" width="150" height="80" rx="12" class="nb"/>
+          <text x="95" y="140" class="nt">Shopmonkey</text>
+          <text x="95" y="162" class="ns">The official record</text>
+          <!-- ErberData -->
+          <rect x="225" y="105" width="160" height="80" rx="12" class="nw"/>
+          <text x="305" y="140" class="ntd">ErberData</text>
+          <text x="305" y="162" class="nsd">Local copy</text>
+          <!-- Ontology -->
+          <rect x="420" y="105" width="160" height="80" rx="12" class="nw"/>
+          <text x="500" y="140" class="ntd">Shop data model</text>
+          <text x="500" y="162" class="nsd">Cleaned &amp; privacy-safe</text>
+          <!-- Tools -->
+          <rect x="615" y="75" width="165" height="140" rx="12" class="nw"/>
+          <text x="697" y="104" class="ntd">Office tools</text>
+          <text x="697" y="130" class="nsd">Caller screen</text>
+          <text x="697" y="150" class="nsd">Tagger</text>
+          <text x="697" y="170" class="nsd">Parts price check</text>
+          <text x="697" y="190" class="nsd">Systems page</text>
+          <!-- Staff -->
+          <rect x="830" y="105" width="150" height="80" rx="12" class="nb"/>
+          <text x="905" y="140" class="nt">Shop team</text>
+          <text x="905" y="162" class="ns">Front desk &amp; techs</text>
+          <!-- arrows -->
+          <path d="M170 145H222" class="ar" marker-end="url(#ah)"/>
+          <path d="M385 145H417" class="ar" marker-end="url(#ah)"/>
+          <path d="M580 145H612" class="ar" marker-end="url(#ah)"/>
+          <path d="M780 145H827" class="ar" marker-end="url(#ah)"/>
+          <!-- bots -->
+          <rect x="280" y="335" width="440" height="80" rx="12" class="nbot"/>
+          <text x="500" y="368" class="nt">AI assistant team</text>
+          <text x="500" y="392" class="ns">Erber Grok leads · build, run, review</text>
+          <path d="M500 333V273" class="ar dash" marker-end="url(#ah)"/>
+          <text x="512" y="308" class="al left">builds &amp; maintains</text>
+          <!-- people approve -->
+          <rect x="800" y="335" width="180" height="80" rx="12" class="nred"/>
+          <text x="890" y="368" class="nt">People approve</text>
+          <text x="890" y="392" class="ns">Merges · deploys · sends · spend</text>
+          <path d="M722 375H797" class="ar red" marker-end="url(#ahr)"/>
+          <text x="760" y="364" class="al">asks</text>
+        </svg>
+        <svg class="tall" viewBox="0 0 340 900" role="img" aria-label="Shopmonkey sends records to the office PC, where ErberData copies them, the shop data model cleans them, and office tools serve the shop team. The AI team builds and maintains the PC and asks people for approval."><defs><marker id="mh" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#0F2F66"/></marker><marker id="mhr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 10 5 0 10z" fill="#C42610"/></marker></defs>
+          <rect x="15" y="130" width="310" height="440" rx="16" class="zone"/><text x="30" y="156" class="zl">The office PC</text>
+<rect x="30" y="20" width="280" height="70" rx="12" class="nb"/><text x="170" y="50" class="nt">Shopmonkey</text><text x="170" y="72" class="ns">The official record</text><rect x="30" y="175" width="280" height="70" rx="12" class="nw"/><text x="170" y="205" class="ntd">ErberData</text><text x="170" y="227" class="nsd">Local copy</text><rect x="30" y="280" width="280" height="70" rx="12" class="nw"/><text x="170" y="310" class="ntd">Shop data model</text><text x="170" y="332" class="nsd">Cleaned &amp; privacy-safe</text><rect x="30" y="385" width="280" height="135" rx="12" class="nw"/><text x="170" y="415" class="ntd">Office tools</text><text x="170" y="437" class="nsd">Caller screen</text><text x="170" y="456" class="nsd">Tagger</text><text x="170" y="475" class="nsd">Parts price check</text><text x="170" y="494" class="nsd">Systems page</text><rect x="30" y="610" width="280" height="70" rx="12" class="nb"/><text x="170" y="640" class="nt">Shop team</text><text x="170" y="662" class="ns">Front desk &amp; techs</text><rect x="30" y="710" width="280" height="70" rx="12" class="nbot"/><text x="170" y="740" class="nt">AI assistant team</text><text x="170" y="762" class="ns">Erber Grok leads</text><rect x="30" y="815" width="280" height="70" rx="12" class="nred"/><text x="170" y="845" class="nt">People approve</text><text x="170" y="867" class="ns">Merges · deploys · sends · spend</text><path d="M170 90V172" class="ar" marker-end="url(#mh)"/><path d="M170 245V277" class="ar" marker-end="url(#mh)"/><path d="M170 350V382" class="ar" marker-end="url(#mh)"/><path d="M170 520V607" class="ar" marker-end="url(#mh)"/><path d="M320 745H334V560H328" class="ar dash" marker-end="url(#mh)"/><path d="M170 780V812" class="ar red" marker-end="url(#mhr)"/>
+        </svg>
+        <figcaption>Arrows show which way information moves. The AI team never skips the red box.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section aria-labelledby="rec-h">
+    <div class="wrap two">
+      <div>
+        <h2 id="rec-h">One record, copied carefully</h2>
+        <p><strong>Shopmonkey</strong> is the shop's system of record: every customer, vehicle, and repair order lives there first.</p>
+        <p><strong>ErberData</strong> runs on the office PC and keeps a local copy of those records, so office tools can look things up quickly without asking Shopmonkey every time. It also keeps parts-invoice records and retail parts prices.</p>
+        <p>The <strong>shop data model</strong> (we call it the ontology) reads a snapshot of that copy and turns it into one clean, trustworthy picture of customers, vehicles, and orders. It never writes back.</p>
+        <p class="status">Status: the shop data model is built and reviewed, but it isn't switched on yet. It'll run nightly once it's been checked against real data.</p>
+      </div>
+      <aside class="rules" aria-labelledby="priv-h">
+        <h3 id="priv-h">Privacy rules built into the model</h3>
+        <ul>
+          <li><b>Masking.</b> AI assistants only ever see masked views, never full customer details.</li>
+          <li><b>Shop texts</b> (like "your car is ready") follow the permissions customers already gave in Shopmonkey.</li>
+          <li><b>Marketing</b> uses the strictest answer. If we don't know a customer said yes, the answer is no.</li>
+          <li><b>Freshness checks</b> flag data that's out of date instead of passing it off as current.</li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+  <section class="tint" aria-labelledby="svc-h">
+    <div class="wrap">
+      <h2 id="svc-h">What runs on the office PC</h2>
+      <p class="intro">If it runs at the shop, it runs on this one computer. Staff reach it by signing in with their work Google account.</p>
+      <dl class="services">
+        <div><dt>ScreenPop &amp; Caller HUD</dt><dd>When the phone rings, the screen shows who's calling and their history with us. It can suggest call notes with AI, but an advisor approves each one.</dd></div>
+        <div><dt>Tagger</dt><dd>Workflow helpers for repair orders: tags orders, writes inspection summaries with Claude Haiku, and sends the pickup text when a car moves to Ready For Pickup.</dd></div>
+        <div><dt>O'Reilly price check</dt><dd>A fixed daily job that reads retail parts prices for quotes. No AI involved.</dd></div>
+        <div><dt>Systems page</dt><dd>A status board for the administrator: what's running, what needs a look, and a few safe, pre-approved restart buttons.</dd></div>
+      </dl>
+      <p class="fine">Also on the PC: parts-invoice intake (including a new phone scan page), a nightly backup, and the shop's knowledge notes.</p>
+    </div>
+  </section>
+
+  <section aria-labelledby="bots-h">
+    <div class="wrap two">
+      <div>
+        <h2 id="bots-h">AI assistants do the legwork. People decide.</h2>
+        <p>A team of Grok Bot assistants helps build and run everything above. They draft, check, and prepare. <strong>Erber Grok</strong> leads the team and brings decisions to a person.</p>
+        <ul class="team">
+          <li><b>Developer</b> writes and fixes code, and proposes changes for review.</li>
+          <li><b>Systems Ops</b> runs a morning health check and handles safe restarts.</li>
+          <li><b>Marketing Lead</b> plans marketing with the shop owner.</li>
+          <li><b>Researcher</b> looks things up and checks facts.</li>
+          <li>Plus helpers for writing, design, email, meeting notes, and measuring results.</li>
+        </ul>
+      </div>
+      <aside class="gate" aria-labelledby="gate-h">
+        <h3 id="gate-h">Only a person can</h3>
+        <ul>
+          <li>Merge code</li>
+          <li>Deploy to the office PC</li>
+          <li>Send anything to customers</li>
+          <li>Spend money</li>
+        </ul>
+        <p>The shop owner also approves anything in his name, voice, or likeness.</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="tint" aria-labelledby="truth-h">
+    <div class="wrap">
+      <h2 id="truth-h">Where the truth lives</h2>
+      <p class="intro">Four places, each in charge of one kind of answer. When they disagree, trust the one that owns the question.</p>
+      <table class="truth">
+        <thead><tr><th scope="col">Question</th><th scope="col">Look here</th><th scope="col">Keep in mind</th></tr></thead>
+        <tbody>
+          <tr><td>Is it running right now?</td><th scope="row">The office PC</th><td>"Merged" or "done" doesn't prove something is live.</td></tr>
+          <tr><td>What does the code say?</td><th scope="row">GitHub</th><td>Merged isn't the same as installed.</td></tr>
+          <tr><td>Who's on it, and what's next?</td><th scope="row">Linear</th><td>A ticket is never an approval.</td></tr>
+          <tr><td>What's the plan? What do we offer?</td><th scope="row">The vault</th><td>No verified note means no claim to customers.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <img src="assets/erber-logo-white.png" width="160" height="22" alt="Erber Auto">
+    <p>Reviewed October 13, 2026. This page holds no customer data, passwords, or network details.</p>
+  </div>
+</footer>
+</body>
+</html>
