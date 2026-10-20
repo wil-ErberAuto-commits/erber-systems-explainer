@@ -20,6 +20,10 @@
       <a href="#c2"><b>02</b> ASCII Idle</a>
       <a href="#c3"><b>03</b> Shop-Light Grain</a>
       <a href="#c4"><b>04</b> Idle Tach</a>
+      <a href="#c4a"><b>04a</b> Cluster Strip</a>
+      <a href="#c4b"><b>04b</b> Corner Tach</a>
+      <a href="#c4c"><b>04c</b> Instrument Row</a>
+      <a href="#c4d"><b>04d</b> Mouse Miles</a>
       <a href="#c5"><b>05</b> Pointer Field</a>
       <a href="#c6"><b>06</b> Palouse After Hours</a>
     </nav>
@@ -128,6 +132,134 @@
       </div>
     </section>
 
+    <section class="concept variant" id="c4a" data-c="4a" data-fx="tach-strip">
+      <div class="concept-meta">
+        <span class="num">04a</span>
+        <div>
+          <h2>Cluster Strip</h2>
+          <p class="tech">Ordered dithering &middot; 8&times;8 Bayer, 1-bit on navy &middot; four dials whose needles turn to follow the pointer</p>
+          <p class="fit"><b>Fits:</b> a slim strip under the dashboard header, about 130&nbsp;px tall, framing the day&rsquo;s summary row.</p>
+        </div>
+        <a class="open" href="?c=4a">Open full-bleed &rarr;</a>
+      </div>
+      <div class="stage mini m4a">
+        <div class="mock-top">
+          <img class="logo" src="assets/erber-logo-white.png" alt="Erber Auto" width="480" height="66">
+          <div class="mock-nav" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="strip" data-surface>
+          <div class="gauge"><div class="dial-slot"></div><div class="glabel"><b>RPM</b><span>&times; 1000</span></div></div>
+          <div class="gauge"><div class="dial-slot"></div><div class="glabel"><b>Temp</b><span>C &ndash; H</span></div></div>
+          <div class="gauge"><div class="dial-slot"></div><div class="glabel"><b>Fuel</b><span>E &ndash; F</span></div></div>
+          <div class="gauge"><div class="dial-slot"></div><div class="glabel"><b>Oil</b><span>psi</span></div></div>
+        </div>
+        <div class="mock-grid" aria-hidden="true">
+          <div class="card"><i></i><i class="w60"></i><i class="w40"></i></div>
+          <div class="card"><i></i><i class="w70"></i><i class="w30"></i></div>
+          <div class="card"><i></i><i class="w50"></i><i class="w60"></i></div>
+        </div>
+        <p class="hint">Hover anywhere and the needles follow you. On touch, tap or drag sideways.</p>
+      </div>
+    </section>
+
+    <section class="concept variant" id="c4b" data-c="4b" data-fx="tach-corner">
+      <div class="concept-meta">
+        <span class="num">04b</span>
+        <div>
+          <h2>Corner Tach</h2>
+          <p class="tech">Error diffusion &middot; Floyd&ndash;Steinberg, 1-bit &middot; one small tach that revs as the pointer gets closer</p>
+          <p class="fit"><b>Fits:</b> the right-hand corner of the persistent header, a quiet bit of personality about 90&nbsp;px wide.</p>
+        </div>
+        <a class="open" href="?c=4b">Open full-bleed &rarr;</a>
+      </div>
+      <div class="stage mini m4b">
+        <header class="mock-head">
+          <img class="logo" src="assets/erber-logo-white.png" alt="Erber Auto" width="480" height="66">
+          <nav aria-label="Example navigation"><a class="on">Today</a><a>Bays</a><a>Schedule</a><a>Parts</a><a>Invoices</a></nav>
+          <div class="corner-tach">
+            <div class="glabel"><b>RPM</b><span>&times; 1000</span></div>
+            <div class="tach-slot" data-surface></div>
+          </div>
+        </header>
+        <div class="mock-title" aria-hidden="true"><i></i><i></i></div>
+        <div class="mock-grid" aria-hidden="true">
+          <div class="card"><i></i><i class="w60"></i><i class="w40"></i></div>
+          <div class="card"><i></i><i class="w70"></i><i class="w30"></i></div>
+          <div class="card"><i></i><i class="w50"></i><i class="w60"></i></div>
+          <div class="card"><i></i><i class="w40"></i><i class="w70"></i></div>
+          <div class="card"><i></i><i class="w60"></i><i class="w50"></i></div>
+          <div class="card"><i></i><i class="w30"></i><i class="w60"></i></div>
+        </div>
+        <p class="hint">Move toward the corner to rev it into the red. On touch, tap or drag sideways.</p>
+      </div>
+    </section>
+
+    <section class="concept variant" id="c4c" data-c="4c" data-fx="tach-row">
+      <div class="concept-meta">
+        <span class="num">04c</span>
+        <div>
+          <h2>Instrument Row</h2>
+          <p class="tech">Error diffusion &middot; Atkinson, 1-bit on navy &middot; three mini dials, pointer x is the throttle</p>
+          <p class="fit"><b>Fits:</b> one dashboard card, two columns wide, as the visual anchor of the &ldquo;Today&rdquo; overview.</p>
+        </div>
+        <a class="open" href="?c=4c">Open full-bleed &rarr;</a>
+      </div>
+      <div class="stage mini m4c">
+        <div class="mock-top">
+          <img class="logo" src="assets/erber-logo-white.png" alt="Erber Auto" width="480" height="66">
+          <div class="mock-nav" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="mock-grid">
+          <div class="card panel">
+            <div class="panel-head"><b>Instrument panel</b><span>Throttle follows the pointer left to right</span></div>
+            <div class="panel-dials" data-surface>
+              <div class="cell"><div class="dial-slot"></div><span>RPM</span></div>
+              <div class="cell"><div class="dial-slot"></div><span>MPH</span></div>
+              <div class="cell"><div class="dial-slot"></div><span>Temp</span></div>
+            </div>
+          </div>
+          <div class="card" aria-hidden="true"><i></i><i class="w60"></i><i class="w40"></i></div>
+          <div class="card" aria-hidden="true"><i></i><i class="w70"></i><i class="w30"></i></div>
+          <div class="card" aria-hidden="true"><i></i><i class="w50"></i><i class="w60"></i></div>
+          <div class="card" aria-hidden="true"><i></i><i class="w40"></i><i class="w70"></i></div>
+        </div>
+        <p class="hint">Sweep left to right: RPM answers fast, speed catches up, temperature takes its time.</p>
+      </div>
+    </section>
+
+    <section class="concept variant" id="c4d" data-c="4d" data-fx="tach-odo">
+      <div class="concept-meta">
+        <span class="num">04d</span>
+        <div>
+          <h2>Mouse Miles</h2>
+          <p class="tech">Ordered dithering &middot; Bayer, 1-bit &middot; half-dial reads pointer speed, rolling drums count pointer travel</p>
+          <p class="fit"><b>Fits:</b> a small footer or sidebar widget, about 360&nbsp;px wide, a little shop-counter joke that rewards poking around.</p>
+        </div>
+        <a class="open" href="?c=4d">Open full-bleed &rarr;</a>
+      </div>
+      <div class="stage mini m4d">
+        <div class="mock-top">
+          <img class="logo" src="assets/erber-logo-white.png" alt="Erber Auto" width="480" height="66">
+          <div class="mock-nav" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+        </div>
+        <div class="mock-grid">
+          <div class="card" aria-hidden="true"><i></i><i class="w60"></i><i class="w40"></i></div>
+          <div class="card" aria-hidden="true"><i></i><i class="w70"></i><i class="w30"></i></div>
+          <div class="card odo">
+            <div class="odo-row" data-surface>
+              <div class="odo-dial"></div>
+              <div class="odo-drums"></div>
+            </div>
+            <div class="odo-label"><b>Mouse miles</b><span>Inches your pointer has travelled this visit. Needle reads how fast.</span></div>
+          </div>
+          <div class="card" aria-hidden="true"><i></i><i class="w40"></i><i class="w70"></i></div>
+          <div class="card" aria-hidden="true"><i></i><i class="w60"></i><i class="w50"></i></div>
+          <div class="card" aria-hidden="true"><i></i><i class="w30"></i><i class="w60"></i></div>
+        </div>
+        <p class="hint">Wiggle the pointer to wind it up. On touch, drag sideways.</p>
+      </div>
+    </section>
+
     <section class="concept" id="c5" data-c="5" data-fx="ascii-field">
       <div class="concept-meta">
         <span class="num">05</span>
@@ -177,7 +309,7 @@
   </main>
 
   <footer class="gallery-foot">
-    <p>Concept gallery for review. Graphics are generated live in the browser from the brand palette; the logo is the supplied PNG, unaltered. Add <code>?c=1</code>&ndash;<code>?c=6</code> to view one concept full-bleed, or <code>?still</code> to freeze motion.</p>
+    <p>Concept gallery for review. Graphics are generated live in the browser from the brand palette; the logo is the supplied PNG, unaltered. Add <code>?c=1</code>&ndash;<code>?c=6</code> (or <code>?c=4a</code>&ndash;<code>?c=4d</code>) to view one concept full-bleed, or <code>?still</code> to freeze motion.</p>
   </footer>
 
   <script src="js/core.js"></script>
@@ -185,6 +317,11 @@
   <script src="js/c2-ascii-car.js"></script>
   <script src="js/c3-grain-header.js"></script>
   <script src="js/c4-tach.js"></script>
+  <script src="js/c4-mini.js"></script>
+  <script src="js/c4a-cluster-strip.js"></script>
+  <script src="js/c4b-corner-tach.js"></script>
+  <script src="js/c4c-instrument-row.js"></script>
+  <script src="js/c4d-odometer.js"></script>
   <script src="js/c5-ascii-field.js"></script>
   <script src="js/c6-palouse.js"></script>
   <script>
