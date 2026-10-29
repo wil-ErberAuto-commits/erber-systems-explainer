@@ -93,15 +93,16 @@
         <p class="lede">Copy the script, call or text from your own phone, then log what happened. Nothing on this page contacts the customer.</p>
       </div>
       <nav class="tabs" role="tablist" aria-label="Call lists">
-        <button role="tab" data-tab="all">All <span>984</span></button>
-        <button role="tab" data-tab="checkin">Check-in <span>60</span></button>
-        <button role="tab" data-tab="declined">Declined work <span data-only="withheld text done">2</span><span data-only="empty">0</span></button>
-        <button role="tab" data-tab="due">Due service <span data-only="withheld empty">288</span><span data-only="text">287</span><span data-only="done">263</span></button>
-        <button role="tab" data-tab="lapsed">Lapsed <span>439</span></button>
-        <button role="tab" data-tab="cold">Cold outreach <span>195</span></button>
+        <button role="tab" aria-controls="outreach-panel" id="tab-all" data-tab="all">All <span>984</span></button>
+        <button role="tab" aria-controls="outreach-panel" id="tab-checkin" data-tab="checkin">Check-in <span>60</span></button>
+        <button role="tab" aria-controls="outreach-panel" id="tab-declined" data-tab="declined">Declined work <span data-only="withheld text done">2</span><span data-only="empty">0</span></button>
+        <button role="tab" aria-controls="outreach-panel" id="tab-due" data-tab="due">Due service <span data-only="withheld empty">288</span><span data-only="text">287</span><span data-only="done">263</span></button>
+        <button role="tab" aria-controls="outreach-panel" id="tab-lapsed" data-tab="lapsed">Lapsed <span>439</span></button>
+        <button role="tab" aria-controls="outreach-panel" id="tab-cold" data-tab="cold">Cold outreach <span>195</span></button>
       </nav>
     </div>
 
+    <div id="outreach-panel" role="tabpanel" class="panel">
     <!-- Empty state: the whole work area -->
     <section class="empty" data-only="empty" aria-labelledby="empty-h">
       <svg class="empty-ico" aria-hidden="true"><use href="#i-inbox"/></svg>
@@ -185,7 +186,7 @@
           <section class="d-block" aria-labelledby="s-a">
             <div class="d-block-head">
               <h3 id="s-a">Call script</h3>
-              <button class="btn btn-secondary btn-sm"><svg class="ico ico-sm"><use href="#i-copy"/></svg>Copy script <kbd>S</kbd></button>
+              <button class="btn btn-secondary btn-sm" aria-keyshortcuts="s"><svg class="ico ico-sm"><use href="#i-copy"/></svg>Copy script <kbd aria-hidden="true">S</kbd></button>
             </div>
             <p class="script">Hi, this is <mark>your name</mark> at Erber Auto in Moscow. I'm calling for Sample Customer A about the 2014 Ford Expedition. Our records show it's past due for an oil change; it was due around September 19. Would you like to get it on the schedule this week?</p>
           </section>
@@ -203,15 +204,15 @@
 
         <footer class="actions" aria-label="Log the outcome">
           <div class="actions-row">
-            <button class="btn btn-primary btn-lg"><svg class="ico"><use href="#i-phone"/></svg>Called <kbd>C</kbd></button>
-            <button class="btn btn-secondary btn-lg"><svg class="ico"><use href="#i-check"/></svg>Booked <kbd>B</kbd></button>
-            <button class="btn btn-ghost btn-lg">Not interested <kbd>N</kbd></button>
+            <button class="btn btn-primary btn-lg" aria-keyshortcuts="c"><svg class="ico"><use href="#i-phone"/></svg>Called <kbd aria-hidden="true">C</kbd></button>
+            <button class="btn btn-secondary btn-lg" aria-keyshortcuts="b"><svg class="ico"><use href="#i-check"/></svg>Booked <kbd aria-hidden="true">B</kbd></button>
+            <button class="btn btn-ghost btn-lg" aria-keyshortcuts="n">Not interested <kbd aria-hidden="true">N</kbd></button>
           </div>
           <div class="snooze" role="group" aria-labelledby="sz-a">
             <span id="sz-a" class="snooze-label"><svg class="ico ico-sm"><use href="#i-clock"/></svg>Snooze</span>
             <div class="seg">
-              <button>1 day <kbd>1</kbd></button>
-              <button>7 days <kbd>7</kbd></button>
+              <button aria-keyshortcuts="1">1 day <kbd aria-hidden="true">1</kbd></button>
+              <button aria-keyshortcuts="7">7 days <kbd aria-hidden="true">7</kbd></button>
               <button>30 days</button>
               <button><svg class="ico ico-sm"><use href="#i-calendar"/></svg>Pick a date</button>
             </div>
@@ -237,7 +238,7 @@
           <section class="d-block" aria-labelledby="s-b">
             <div class="d-block-head">
               <h3 id="s-b">Call script</h3>
-              <button class="btn btn-secondary btn-sm"><svg class="ico ico-sm"><use href="#i-copy"/></svg>Copy script <kbd>S</kbd></button>
+              <button class="btn btn-secondary btn-sm" aria-keyshortcuts="s"><svg class="ico ico-sm"><use href="#i-copy"/></svg>Copy script <kbd aria-hidden="true">S</kbd></button>
             </div>
             <p class="script">Hi, this is <mark>your name</mark> at Erber Auto in Moscow. I'm calling for Sample Customer B about the 2020 GMC Yukon XL. It's past due for an oil change; it was due around September 19. Can we get it on the schedule this week?</p>
           </section>
@@ -245,7 +246,7 @@
           <section class="d-block" aria-labelledby="t-b">
             <div class="d-block-head">
               <h3 id="t-b">Text draft</h3>
-              <button class="btn btn-secondary btn-sm"><svg class="ico ico-sm"><use href="#i-copy"/></svg>Copy text <kbd>T</kbd></button>
+              <button class="btn btn-secondary btn-sm" aria-keyshortcuts="t"><svg class="ico ico-sm"><use href="#i-copy"/></svg>Copy text <kbd aria-hidden="true">T</kbd></button>
             </div>
             <p class="script">Hi from Erber Auto in Moscow. Your 2020 GMC Yukon XL is due for an oil change (it was due Sep 19). Call us at (208) 555-0100 or reply to book a time. Reply STOP to opt out.</p>
             <p class="d-note"><svg class="ico ico-sm"><use href="#i-message"/></svg>Text consent on file since Jun 2024.</p>
@@ -254,15 +255,15 @@
 
         <footer class="actions" aria-label="Log the outcome">
           <div class="actions-row">
-            <button class="btn btn-primary btn-lg"><svg class="ico"><use href="#i-phone"/></svg>Called <kbd>C</kbd></button>
-            <button class="btn btn-secondary btn-lg"><svg class="ico"><use href="#i-check"/></svg>Booked <kbd>B</kbd></button>
-            <button class="btn btn-ghost btn-lg">Not interested <kbd>N</kbd></button>
+            <button class="btn btn-primary btn-lg" aria-keyshortcuts="c"><svg class="ico"><use href="#i-phone"/></svg>Called <kbd aria-hidden="true">C</kbd></button>
+            <button class="btn btn-secondary btn-lg" aria-keyshortcuts="b"><svg class="ico"><use href="#i-check"/></svg>Booked <kbd aria-hidden="true">B</kbd></button>
+            <button class="btn btn-ghost btn-lg" aria-keyshortcuts="n">Not interested <kbd aria-hidden="true">N</kbd></button>
           </div>
           <div class="snooze" role="group" aria-labelledby="sz-b">
             <span id="sz-b" class="snooze-label"><svg class="ico ico-sm"><use href="#i-clock"/></svg>Snooze</span>
             <div class="seg">
-              <button>1 day <kbd>1</kbd></button>
-              <button>7 days <kbd>7</kbd></button>
+              <button aria-keyshortcuts="1">1 day <kbd aria-hidden="true">1</kbd></button>
+              <button aria-keyshortcuts="7">7 days <kbd aria-hidden="true">7</kbd></button>
               <button>30 days</button>
               <button><svg class="ico ico-sm"><use href="#i-calendar"/></svg>Pick a date</button>
             </div>
@@ -283,17 +284,19 @@
             <div><dt>Not interested</dt><dd>3</dd></div>
           </dl>
           <div class="done-actions">
-            <button class="btn btn-primary btn-lg">Start next 25 <kbd>Enter</kbd></button>
+            <button class="btn btn-primary btn-lg" aria-keyshortcuts="Enter">Start next 25 <kbd aria-hidden="true">Enter</kbd></button>
             <button class="btn btn-ghost btn-lg">Review this batch</button>
           </div>
         </div>
       </section>
     </div>
 
+    </div>
+
     <div class="toast" data-only="text" role="status">
       <svg class="ico"><use href="#i-check"/></svg>
       <span><strong>Sample Customer A</strong> logged as Booked</span>
-      <button class="toast-undo">Undo <kbd>U</kbd></button>
+      <button class="toast-undo" aria-keyshortcuts="u">Undo <kbd aria-hidden="true">U</kbd></button>
     </div>
   </main>
 </div>
@@ -305,7 +308,11 @@
     el.hidden = !el.dataset.only.split(' ').includes(state);
   });
   const tab = state === 'empty' ? 'declined' : 'due';
-  document.querySelectorAll('[role=tab]').forEach(t => t.setAttribute('aria-selected', t.dataset.tab === tab));
+  document.querySelectorAll('[role=tab]').forEach(t => {
+    t.setAttribute('aria-selected', t.dataset.tab === tab);
+    t.tabIndex = t.dataset.tab === tab ? 0 : -1;
+  });
+  document.getElementById('outreach-panel').setAttribute('aria-labelledby', 'tab-' + tab);
   const selected = { withheld: 'a', text: 'b' }[state];
   document.querySelectorAll('.row').forEach(r => {
     const dismissed = state === 'done' || (state === 'text' && r.dataset.id === 'a');

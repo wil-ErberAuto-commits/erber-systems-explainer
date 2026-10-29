@@ -176,6 +176,7 @@ h1 { font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height
 .tabs [role=tab][aria-selected=true] { color: var(--color-navy); font-weight: var(--weight-semibold); border-bottom-color: var(--color-navy); }
 .tabs [role=tab][aria-selected=true] span { color: var(--color-navy); }
 
+.panel { flex: 1; min-height: 0; display: flex; flex-direction: column; }
 .work { flex: 1; min-height: 0; display: grid; grid-template-columns: var(--list-w) 1fr; }
 
 /* ---------- List pane ---------- */
