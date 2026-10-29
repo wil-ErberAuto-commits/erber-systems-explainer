@@ -56,7 +56,7 @@ There is no P0: staff can finish the task today. They're slow, and mistakes are 
 
 - **What:** "Text draft withheld: no marketing consent" is bold, about 20px, and orange, larger and louder than the customer's name. Orange text on white at this weight is very likely under 4.5:1. Sample the rendered colour; anything lighter than the token `--color-warning` `#8A5A00` fails.
 - **Why it matters:** it reads like an error that blocks the row, when the actual instruction is simple: call, don't text. It also teaches staff to ignore orange, so a real warning later gets missed.
-- **Fix:** in the list, show a small neutral "Call only" chip with a lock icon. In the detail panel, put the notice where the text draft would be, using `--color-warning-bg`, `--color-warning-border`, and `--color-warning-text` (`#4A3200`, about 11:1). Lead with the instruction ("Call only. No text draft for this customer."), then the reason and the recovery ("No marketing consent on file. If they agree to texts on the call, update their customer record.").
+- **Fix:** in the list, show a small neutral "Call only" chip with a lock icon. In the detail panel, put the notice where the text draft would be, using `--color-warning-bg`, `--color-warning-border`, and `--color-warning-text` (`#4A3200`, about 11:1). Lead with the instruction, then the reason and where to fix it. Owner-approved copy: "Call only. No text consent on file. Update it in the customer record if they agree." There is no consent control on Outreach.
 
 ### 3. [P1] Half the screen is empty while the essentials are collapsed
 
@@ -125,7 +125,7 @@ There is no P0: staff can finish the task today. They're slow, and mistakes are 
 | No eyebrow labels | Fails: four uppercase kickers | None. Real labels and headings only |
 | Text contrast ≥4.5:1 | Orange warning and 11px greys at risk | All text pairs from tokens, ≥4.5:1 (detector clean) |
 | Targets 44–48px | Fails: about 30px pills and input | 48px floor, 56px for outcome buttons, 44px for small secondaries |
-| Real states | Only the default is visible | Default, call-only, text allowed, logged + undo, empty, batch done. Loading and error are specified in `spec.md` |
+| Real states | Only the default is visible | Default, call-only, text allowed, dismissed + undo, empty, batch done. Loading and error are specified in `spec.md` |
 
 ## Detector results (run on the proposed mockup)
 
@@ -134,8 +134,8 @@ There is no P0: staff can finish the task today. They're slow, and mistakes are 
 - **"Tight line height 1.28x":** single-line headings using `--leading-tight` (1.2). They never wrap at 1440px.
 - **"Cramped padding on `.seg`":** the segmented snooze control's buttons are meant to fill their outline edge to edge. Each button has its own 16px horizontal padding and a 48px height.
 
-## Questions to consider
+## Owner decisions (Oct 29, 2026)
 
-- Should Called really be primary, or does the shop want Booked to be the loudest outcome even though it's rarer? (The mockup chooses Called on the assumption that it's the most frequent outcome, and relies on Undo for mistakes.)
-- Should logging an outcome auto-advance to the next customer? The mockup assumes yes, with undo.
-- Can consent be updated from this page, or only in the customer record? The consent notice copy depends on the answer.
+- Called stays the primary button.
+- Every outcome (Called, Booked, Not interested, any Snooze) dismisses the customer from the list right away and selects the next one. Undo (U, 8s) brings them back.
+- Staff can't change consent on Outreach. The notice is read-only with the copy above.

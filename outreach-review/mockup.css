@@ -193,6 +193,7 @@ h1 { font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height
 [data-state=done] .meter span { width: 100%; background: var(--color-success); }
 
 .rows { flex: 1; overflow: auto; }
+[data-state=done] .rows { display: none; }
 .row {
   position: relative;
   padding: var(--space-3) var(--space-6);
@@ -213,20 +214,8 @@ h1 { font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height
 .row-phone { color: var(--color-navy); font-weight: var(--weight-semibold); }
 .flag { display: inline-flex; align-items: center; gap: 6px; color: var(--color-warning-text); background: var(--color-warning-bg); padding: 2px var(--space-2); border-radius: var(--radius-sm); font-weight: var(--weight-medium); }
 .flag-ok { color: var(--color-success); background: var(--color-success-bg); }
-.row-logged { display: none; }
-.row.is-logged .row-name, .row.is-logged .row-reason { color: var(--color-disabled-text); }
-.row.is-logged .row-name { font-weight: var(--weight-medium); }
-.row.is-logged .row-when { display: none; }
-.row.is-logged .row-logged {
-  display: inline-flex; align-items: center;
-  position: absolute; right: var(--space-6); top: var(--space-3);
-  font-size: var(--text-xs); font-weight: var(--weight-semibold);
-  color: var(--color-success); background: var(--color-success-bg);
-  padding: 2px var(--space-2); border-radius: var(--radius-sm);
-}
-.row.is-logged[data-outcome="Not interested"] .row-logged { color: var(--color-text-muted); background: var(--color-disabled-bg); }
-.row.is-logged[data-outcome^="Snoozed"] .row-logged,
-.row.is-logged[data-outcome="Called"] .row-logged { color: var(--color-navy); background: var(--color-info-bg); }
+.list-clear { flex: 1; padding: var(--space-8) var(--space-6); color: var(--color-text-muted); }
+.list-clear-title { font-size: var(--text-base); font-weight: var(--weight-semibold); color: var(--color-text); }
 
 .list-foot {
   display: flex; justify-content: space-between; align-items: center;

@@ -130,40 +130,39 @@
         </header>
 
         <ol class="rows" role="listbox" aria-label="Customers to call">
-          <li class="row" data-id="a" role="option" tabindex="0" data-outcome="Booked">
+          <li class="row" data-id="a" role="option" tabindex="0">
             <div class="row-top"><span class="row-name">Sample Customer A</span><span class="row-when">40 days over</span></div>
             <p class="row-reason">Oil change · 2014 Ford Expedition</p>
             <p class="row-flags"><span class="flag"><svg class="ico ico-sm"><use href="#i-lock"/></svg>Call only</span><span class="row-phone">(208) 555-0142</span></p>
-            <p class="row-logged"></p>
           </li>
-          <li class="row" data-id="b" role="option" tabindex="-1" data-outcome="Called">
+          <li class="row" data-id="b" role="option" tabindex="-1">
             <div class="row-top"><span class="row-name">Sample Customer B</span><span class="row-when">40 days over</span></div>
             <p class="row-reason">Oil change · 2020 GMC Yukon XL</p>
             <p class="row-flags"><span class="flag flag-ok"><svg class="ico ico-sm"><use href="#i-message"/></svg>Text OK</span><span class="row-phone">(208) 555-0177</span></p>
-            <p class="row-logged"></p>
           </li>
-          <li class="row" data-id="c" role="option" tabindex="-1" data-outcome="Snoozed 7 days">
+          <li class="row" data-id="c" role="option" tabindex="-1">
             <div class="row-top"><span class="row-name">Sample Customer C</span><span class="row-when">39 days over</span></div>
             <p class="row-reason">Oil change · 2020 Kia Telluride</p>
             <p class="row-flags"><span class="flag flag-ok"><svg class="ico ico-sm"><use href="#i-message"/></svg>Text OK</span><span class="row-phone">(208) 555-0119</span></p>
-            <p class="row-logged"></p>
           </li>
-          <li class="row" data-id="d" role="option" tabindex="-1" data-outcome="Not interested">
+          <li class="row" data-id="d" role="option" tabindex="-1">
             <div class="row-top"><span class="row-name">Sample Customer D</span><span class="row-when">31 days over</span></div>
             <p class="row-reason">Oil change · 2002 Toyota Tacoma</p>
             <p class="row-flags"><span class="flag"><svg class="ico ico-sm"><use href="#i-lock"/></svg>Call only</span><span class="row-phone">(208) 555-0163</span></p>
-            <p class="row-logged"></p>
           </li>
-          <li class="row" data-id="e" role="option" tabindex="-1" data-outcome="Called">
+          <li class="row" data-id="e" role="option" tabindex="-1">
             <div class="row-top"><span class="row-name">Sample Customer E</span><span class="row-when">30 days over</span></div>
             <p class="row-reason">Oil change · 2012 Subaru Forester</p>
             <p class="row-flags"><span class="flag flag-ok"><svg class="ico ico-sm"><use href="#i-message"/></svg>Text OK</span><span class="row-phone">(208) 555-0128</span></p>
-            <p class="row-logged"></p>
           </li>
         </ol>
+        <div class="list-clear" data-only="done">
+          <p class="list-clear-title">No one left in this batch</p>
+          <p>Worked customers are under Worked recently.</p>
+        </div>
 
         <footer class="list-foot">
-          <button class="disclose"><svg class="ico ico-sm"><use href="#i-chevron"/></svg>Worked recently <span>41</span></button>
+          <button class="disclose"><svg class="ico ico-sm"><use href="#i-chevron"/></svg>Worked recently <span data-only="withheld empty">41</span><span data-only="text">42</span><span data-only="done">66</span></button>
           <p class="keys"><kbd>↑</kbd><kbd>↓</kbd> move <span aria-hidden="true">·</span> <kbd>?</kbd> shortcuts</p>
         </footer>
       </section>
@@ -196,8 +195,7 @@
             <div class="consent" role="note">
               <svg class="ico"><use href="#i-lock"/></svg>
               <div>
-                <p class="consent-title">Call only. No text draft for this customer.</p>
-                <p>No marketing consent on file. If they agree to texts on the call, update their customer record.</p>
+                <p><strong class="consent-title">Call only.</strong> No text consent on file. Update it in the customer record if they agree.</p>
               </div>
             </div>
           </section>
@@ -250,7 +248,7 @@
               <button class="btn btn-secondary btn-sm"><svg class="ico ico-sm"><use href="#i-copy"/></svg>Copy text <kbd>T</kbd></button>
             </div>
             <p class="script">Hi from Erber Auto in Moscow. Your 2020 GMC Yukon XL is due for an oil change (it was due Sep 19). Call us at (208) 555-0100 or reply to book a time. Reply STOP to opt out.</p>
-            <p class="d-note"><svg class="ico ico-sm"><use href="#i-message"/></svg>Marketing consent on file since Jun 2024.</p>
+            <p class="d-note"><svg class="ico ico-sm"><use href="#i-message"/></svg>Text consent on file since Jun 2024.</p>
           </section>
         </div>
 
@@ -310,11 +308,12 @@
   document.querySelectorAll('[role=tab]').forEach(t => t.setAttribute('aria-selected', t.dataset.tab === tab));
   const selected = { withheld: 'a', text: 'b' }[state];
   document.querySelectorAll('.row').forEach(r => {
-    const logged = state === 'done' || (state === 'text' && r.dataset.id === 'a');
+    const dismissed = state === 'done' || (state === 'text' && r.dataset.id === 'a');
+    r.hidden = dismissed;
     r.setAttribute('aria-selected', r.dataset.id === selected);
-    r.classList.toggle('is-logged', logged);
-    if (logged) r.querySelector('.row-logged').textContent = r.dataset.outcome + (state === 'text' ? ' · just now' : '');
   });
+  const first = document.querySelector('.row:not([hidden])');
+  if (first) document.querySelectorAll('.row').forEach(r => r.tabIndex = r === first ? 0 : -1);
 </script>
 </body>
 </html>

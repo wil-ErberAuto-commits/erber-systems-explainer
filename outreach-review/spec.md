@@ -4,10 +4,10 @@ Reference: `mockup.html` + `mockup.css` (open in Chrome at 1440×900). States: `
 
 | Screenshot | Shows |
 |---|---|
-| `mockup-1440.png` | Default: Due service tab, first customer selected, call only (no marketing consent) |
-| `state-text-allowed-undo.png` | Previous customer just logged as Booked (toast with Undo), next customer selected, text draft allowed |
+| `mockup-1440.png` | Default: Due service tab, first customer selected, call only (no text consent) |
+| `state-text-allowed-undo.png` | Previous customer just logged as Booked and dismissed from the list (toast with Undo), next customer selected, text draft allowed |
 | `state-empty.png` | Empty tab (Declined work, 0) |
-| `state-done.png` | Batch finished, with tally and next-batch action |
+| `state-done.png` | Batch finished: list is clear, detail pane shows the tally and next-batch action |
 
 ## 1. Layout (1440×900 desktop)
 
@@ -54,10 +54,8 @@ Reference: `mockup.html` + `mockup.css` (open in Chrome at 1440×900). States: `
 | Small red text (real urgency only) | `--color-red-text` #B3200C | Reserved for things like a missed incoming call. Not used for "overdue", because every row in a due list is overdue, so red would carry no information |
 | Selected row | `--color-info-bg` + inset 1px navy ring | No coloured left border |
 | Call-only chip, consent notice | `--color-warning-bg` / `--color-warning-border` / `--color-warning-text` #4A3200 | ~11:1 contrast |
-| Text OK chip, done, Booked tag | `--color-success` on `--color-success-bg` | |
-| Called / Snoozed tags | navy on `--color-info-bg` | |
-| Not interested tag | muted on `--color-disabled-bg` | |
-| Logged row text | `--color-disabled-text` #5F6B7E | 5.3:1 on white |
+| Text OK chip, done check | `--color-success` on `--color-success-bg` | |
+| Undo toast | `--color-text` fill, white text, success-tinted check icon | |
 | Focus | 3px `--color-focus` outline (inset 3px ring on rows) | Every control |
 
 Counts (tabs, rail nav) are always muted text, never a coloured badge.
@@ -92,23 +90,24 @@ The radius is `--radius-md` on every button.
 - **Snooze group:** one outlined segmented control with options 1 day (1), 7 days (7), 30 days, and Pick a date. "Pick a date" opens a calendar popover (escape the pane with `position: fixed` or a popover) defaulting to today + 14. The old separate "Snooze until date" button is removed.
 - **Keyboard hints:** a `kbd` chip (20px, 12px text, 1px border) inside the button it triggers. Shortcuts: C Called, B Booked, N Not interested, 1 / 7 snooze, S copy script, T copy text, U undo, ↑↓ move, Enter start next batch, ? opens the shortcut sheet. The list footer shows only "↑ ↓ move · ? shortcuts".
 - **Tabs:** underline style, 48px tall, label plus a muted count. Active: navy text, semibold, 3px navy bottom bar. Hover: `--color-border` bottom bar.
-- **Consent notice (no marketing consent):**
+- **Consent notice (no text consent):**
   - Placement: under the "Text draft" heading, where the draft would be.
-  - Contents: a lock icon, the bold line "Call only. No text draft for this customer.", then "No marketing consent on file. If they agree to texts on the call, update their customer record."
+  - Contents: a lock icon and the owner-approved copy, verbatim: "**Call only.** No text consent on file. Update it in the customer record if they agree." ("Call only." is semibold; the rest is regular.)
   - The list row shows the small "Call only" chip with a lock icon.
-  - Confirm the recovery wording with the owner. If consent can be changed right here, add a secondary "Record consent" button instead.
-- **Consent present:** the draft appears in the well with Copy text (T), and a small success-coloured line underneath: "Marketing consent on file since <Mon YYYY>".
+  - Staff cannot change consent on Outreach. There is no consent control, toggle, or link-styled button on this page, and the notice is read-only (`role="note"`).
+- **Consent present:** the draft appears in the well with Copy text (T), and a small success-coloured line underneath: "Text consent on file since <Mon YYYY>". Read-only, no control.
 - **Icons:** a single stroke set, 1.75px stroke, 20px (16px small), `currentColor`. The mockup uses inline SVG. In the app, use the project's icon library at the same stroke weight. No emoji or unicode arrows as icons (keycaps inside `kbd` are fine).
 
 ## 6. Behaviour
 
 1. **Selection:** the first unworked row is selected on load. ↑↓ or a click moves the selection, and the detail pane follows. The list is a `listbox` with roving `tabindex`.
 2. **Logging an outcome:**
-   - The row stays in place but greys out and shows its outcome tag ("Booked · just now"). Selection moves to the next unworked row.
+   - Every outcome dismisses the customer: Called, Booked, Not interested, and any Snooze (1 day, 7 days, 30 days, or a picked date). The row leaves the list immediately (no greyed-out row, no outcome tag, no exit animation beyond the 120ms `--duration-fast` collapse) and the next customer is selected. If it was the last row, selection moves to the previous one; if none remain, show the batch-done state.
+   - The dismissed customer moves to the "Worked recently" count in the list footer.
    - The batch line updates ("4 left in this batch of 25"), and the meter fills.
    - A toast shows above the list footer: "**Sample Customer A** logged as Booked · Undo (U)". It has `role="status"`, stays 8s, pauses on hover, and one toast replaces the previous one.
-3. **Undo** restores the previous outcome and selection.
-4. **Batch done:** when all 25 are worked, the detail pane shows the done state: a check, "Batch done", "You worked all 25 due-service customers in this batch. 263 are still open.", a tally (Booked / Called / Snoozed / Not interested), and buttons for Start next 25 (primary, Enter) and Review this batch. The list keeps the worked rows with their tags.
+3. **Undo** (button or U, available for the 8s the toast is up) clears the logged outcome, puts the customer back in their original list position, and selects them again. After the toast expires, undo is no longer offered on this page.
+4. **Batch done:** when all 25 are worked, the detail pane shows the done state: a check, "Batch done", "You worked all 25 due-service customers in this batch. 263 are still open.", a tally (Booked / Called / Snoozed / Not interested), and buttons for Start next 25 (primary, Enter) and Review this batch. The list pane is empty apart from "No one left in this batch / Worked customers are under Worked recently."
 5. **Incoming call (not mocked):** a ringing call overrides everything. The rail's live block turns into the call card, the page doesn't lose the outreach selection, and staff return to the same customer afterwards. This is where red text belongs.
 
 ## 7. States checklist
@@ -118,7 +117,7 @@ The radius is `--radius-md` on every button.
 | Loading list | 5 skeleton rows (two grey bars each, `--hairline`), batch line skeleton, detail pane skeleton header. No spinner |
 | Empty tab | Spans list + detail. Inbox icon (40px, `--color-border-strong` stroke), heading "No <list> to follow up", one sentence on what lands here, primary button to the busiest non-empty list ("Work Due service 288"), ghost "Show all lists" |
 | Error / mirror offline | Inline banner at the top of the list pane, warning tokens: "Can't reach the shop mirror. Showing the list from <time>." with Retry. Outcome buttons stay enabled and queue locally if supported, otherwise disabled with that reason in a tooltip |
-| Row: default / hover / focus / selected / logged | bg white / `--color-bg` / 3px inset focus ring / `--color-info-bg` + 1px navy ring / greyed text + outcome tag |
+| Row: default / hover / focus / selected | bg white / `--color-bg` / 3px inset focus ring / `--color-info-bg` + 1px navy ring. There is no logged row state: a logged row is removed |
 | No phone on file | Phone slot reads "No phone on file" (muted), and Called and Booked are disabled. Not interested and Snooze stay enabled |
 | Long names | Row name truncates with ellipsis at one line. The detail name wraps (max 2 lines) |
 
@@ -129,7 +128,7 @@ The radius is `--radius-md` on every button.
 | "Copy a script or draft, then call or text yourself. Nothing on this page is sent to a customer." | "Copy the script, call or text from your own phone, then log what happened. Nothing on this page contacts the customer." |
 | "5 Due service in this batch of 25. 288 open in the full list." | "5 left in this batch of 25 · 288 open in all" |
 | "An oil change due 2026-09-19. · 2014 Ford Expedition" | Row: "Oil change · 2014 Ford Expedition" + "40 days over". Detail: "Oil change overdue by 40 days · It was due Sep 19, 2026." |
-| "Text draft withheld: no marketing consent" | "Call only. No text draft for this customer." + reason/recovery line |
+| "Text draft withheld: no marketing consent" | "Call only. No text consent on file. Update it in the customer record if they agree." |
 | "Snooze until date" + date input | "Pick a date" inside the Snooze group |
 | "Arrow keys move. C called, …" | kbd chips on buttons + "↑ ↓ move · ? shortcuts" |
 | "▸ LAST 30 DAYS" | "Worked recently 41" |
@@ -143,13 +142,14 @@ Outcome labels (Called, Booked, Not interested) are unchanged.
 
 - Every text/background pair is ≥4.5:1. The `impeccable detect` run on the mockup reports no contrast failures.
 - Targets: 48px minimum (`--tap-min`), 56px for outcome buttons, 44px for compact secondaries (copy buttons, toast Undo, top-bar tools).
-- Status is never shown by colour alone: consent uses an icon and words, outcomes use tag text.
+- Status is never shown by colour alone: consent uses an icon and words, and every outcome is announced in the toast text.
 - The toast and batch line are `role="status"` live regions. The outcome bar is labelled "Log the outcome". Snooze is a labelled `role="group"`.
 - `prefers-reduced-motion` drops transitions to 0 (already in tokens). Motion stays limited to 120–200ms colour fades.
 
-## 10. Open decisions for the owner
+## 10. Owner decisions (Oct 29, 2026)
 
-1. Primary outcome: Called (mockup) or Booked?
-2. Auto-advance after logging (mockup: yes, with Undo).
-3. Can staff record consent from this page?
-4. Batch size stays 25?
+1. **Primary outcome:** Called stays the primary button. Booked is secondary, Not interested is tertiary.
+2. **Dismissal:** Called, Booked, Not interested, and any Snooze each dismiss the customer immediately and select the next one. Undo (U, 8s toast) brings them back.
+3. **Consent:** staff cannot change consent on Outreach. No consent control on this page. Notice copy is fixed: "Call only. No text consent on file. Update it in the customer record if they agree."
+
+Still open: whether the batch size stays at 25.
