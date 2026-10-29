@@ -24,6 +24,7 @@
     <symbol id="i-car" viewBox="0 0 24 24"><path d="M5 16.5V12l2-5h10l2 5v4.5"/><path d="M3.5 12h17v4.5h-17Z"/><circle cx="7.5" cy="16.5" r="1.5"/><circle cx="16.5" cy="16.5" r="1.5"/></symbol>
     <symbol id="i-user-plus" viewBox="0 0 24 24"><circle cx="10" cy="8.5" r="3.5"/><path d="M3.5 19.5a6.5 6.5 0 0 1 13 0"/><path d="M18.5 8v6M15.5 11h6"/></symbol>
     <symbol id="i-link" viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></symbol>
     <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
     <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/></symbol>
     <symbol id="i-history" viewBox="0 0 24 24"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3L4.5 9"/><path d="M4.5 4.5V9H9M12 8v4.5l3 1.5"/></symbol>
@@ -116,11 +117,13 @@
         <button class="btn btn-primary btn-lg" aria-keyshortcuts="r"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg>Create RO <kbd aria-hidden="true">R</kbd></button>
         <button class="btn btn-secondary btn-lg" aria-keyshortcuts="f"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>Follow up <kbd aria-hidden="true">F</kbd></button>
         <button class="btn btn-ghost btn-lg" aria-keyshortcuts="n"><svg class="ico" aria-hidden="true"><use href="#i-note"/></svg>Add note <kbd aria-hidden="true">N</kbd></button>
+        <button class="keys-btn" popovertarget="shortcuts" aria-keyshortcuts="?" aria-label="Keyboard shortcuts"><kbd aria-hidden="true">?</kbd></button>
       </div>
       <div class="call-actions" data-only="unknown">
         <button class="btn btn-primary btn-lg"><svg class="ico" aria-hidden="true"><use href="#i-user-plus"/></svg>Create customer</button>
         <button class="btn btn-secondary btn-lg"><svg class="ico" aria-hidden="true"><use href="#i-link"/></svg>Link to a customer</button>
         <button class="btn btn-ghost btn-lg" aria-keyshortcuts="n"><svg class="ico" aria-hidden="true"><use href="#i-note"/></svg>Add note <kbd aria-hidden="true">N</kbd></button>
+        <button class="keys-btn" popovertarget="shortcuts" aria-keyshortcuts="?" aria-label="Keyboard shortcuts"><kbd aria-hidden="true">?</kbd></button>
       </div>
     </section>
 
@@ -263,12 +266,32 @@
   </main>
 </div>
 
+<div id="shortcuts" class="sheet" popover aria-labelledby="sheet-h">
+  <div class="sheet-head">
+    <h2 id="sheet-h">Keyboard shortcuts</h2>
+    <button class="btn btn-ghost btn-icon" popovertarget="shortcuts" popovertargetaction="hide" aria-label="Close">
+      <svg class="ico" aria-hidden="true"><use href="#i-close"/></svg>
+    </button>
+  </div>
+  <dl class="sheet-list">
+    <div><dt>Create RO for this caller</dt><dd><kbd>R</kbd></dd></div>
+    <div><dt>Schedule a follow up</dt><dd><kbd>F</kbd></dd></div>
+    <div><dt>Jump to the note box</dt><dd><kbd>N</kbd></dd></div>
+    <div><dt>Save the note</dt><dd><kbd>⌘</kbd><kbd>↵</kbd></dd></div>
+    <div><dt>Save why they're calling</dt><dd><kbd>↵</kbd></dd></div>
+    <div><dt>Show or hide this list</dt><dd><kbd>?</kbd></dd></div>
+  </dl>
+  <p class="sheet-foot">Shortcuts work whenever you're not typing in a field. Esc leaves a field.</p>
+</div>
+
 <script>
-  const state = new URLSearchParams(location.search).get('state') || 'live';
+  const requested = new URLSearchParams(location.search).get('state') || 'live';
+  const state = requested === 'shortcuts' ? 'live' : requested;
   document.body.dataset.state = state;
   document.querySelectorAll('[data-only]').forEach(el => {
     el.hidden = !el.dataset.only.split(' ').includes(state);
   });
+  if (requested === 'shortcuts') document.getElementById('shortcuts').showPopover();
 </script>
 </body>
 </html>
