@@ -154,6 +154,8 @@
   .call-actions .btn-lg { padding: 0 var(--space-4); }
   .call-actions .btn-ghost { padding: 0 var(--space-3); }
   .keys-btn { width: var(--tap-min); }
+  .recent a { grid-template-columns: minmax(0, 1fr) auto; }
+  .r-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
   .cust, .tl { padding-left: var(--space-6); padding-right: var(--space-6); }
 }
 @media (max-width: 1023px) {
