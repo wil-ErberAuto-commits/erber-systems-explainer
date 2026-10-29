@@ -1,0 +1,48 @@
+/* Erber Auto — ERB-25 invoice scan tokens. Drop-in CSS custom properties. */
+@font-face{font-family:"General Sans";src:url(fonts/GeneralSans-Regular.otf);font-weight:400}
+@font-face{font-family:"General Sans";src:url(fonts/GeneralSans-Medium.otf);font-weight:500}
+@font-face{font-family:"General Sans";src:url(fonts/GeneralSans-Semibold.otf);font-weight:600}
+@font-face{font-family:"General Sans";src:url(fonts/GeneralSans-Bold.otf);font-weight:700}
+:root{
+  /* Brand */
+  --color-navy:#0F2F66; --color-navy-dark:#050D57; --color-red:#EC3013;
+  /* Neutrals */
+  --color-bg:#F4F6FA; --color-surface:#FFFFFF; --color-border:#C9D1DE; --color-border-strong:#8794AA;
+  --color-text:#111728; --color-text-muted:#4A5568; --color-text-inverse:#FFFFFF;
+  /* Actions */
+  --color-primary:var(--color-navy); --color-primary-pressed:var(--color-navy-dark);
+  --color-focus:#2F6FEB;
+  /* States (text ≥4.5:1 on their bg) */
+  --color-success:#17703A; --color-success-bg:#E5F4EA;
+  --color-warning:#8A5A00; --color-warning-bg:#FFF4D6; --color-warning-border:#E0A800;
+  --color-danger:#B3200C;  --color-danger-bg:#FDE9E5;   /* red text darkened from #EC3013 for contrast */
+  --color-info:#0F2F66;    --color-info-bg:#E6ECF7;
+  /* Added 2026-10-12 (Impeccable pass), additive only */
+  --color-warning-text:#4A3200; --color-danger-text:#5C1005;
+  --color-disabled-bg:#E2E6EE; --color-disabled-text:#5F6B7E; --color-handle:#B8C0CE;
+  --color-red-text:#B3200C; /* red for small text/badges on white; logo red #EC3013 fails 4.5:1 with white text under 19px bold */
+  --tap-icon:44px;
+  /* Type (General Sans) */
+  --font-sans:"General Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,monospace; /* part numbers */
+  --text-xs:13px; --text-sm:15px; --text-base:17px; --text-lg:20px; --text-xl:24px; --text-2xl:30px;
+  --leading-tight:1.2; --leading-normal:1.45;
+  --weight-regular:400; --weight-medium:500; --weight-semibold:600; --weight-bold:700;
+  /* Spacing (4px base) */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:20px; --space-6:24px; --space-8:32px; --space-10:40px;
+  /* Sizing */
+  --tap-min:48px; --tap-primary:56px; --input-h:52px;
+  /* Radii */
+  --radius-sm:6px; --radius-md:10px; --radius-lg:14px; --radius-pill:999px;
+  /* Shadows */
+  --shadow-sm:0 1px 2px rgba(17,23,40,.08);
+  --shadow-md:0 2px 8px rgba(17,23,40,.12);
+  --shadow-bar:0 -2px 10px rgba(17,23,40,.12); /* sticky bottom action bar */
+  /* Motion */
+  --duration-fast:120ms; --duration-base:200ms;
+}
+@media (prefers-reduced-motion:reduce){:root{--duration-fast:0ms;--duration-base:0ms}}
+
+/* Shared states (additive) */
+:focus-visible{outline:3px solid var(--color-focus);outline-offset:2px}
+::selection{background:var(--color-info-bg);color:var(--color-navy)}
