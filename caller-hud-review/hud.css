@@ -124,7 +124,8 @@
 .ev-body { margin-top: 2px; line-height: 1.5; max-width: 64ch; }
 .ev-declined .ev-title { color: var(--color-warning-text); }
 .ev-group .ev-title { color: var(--color-text-muted); font-weight: var(--weight-medium); }
-.ev-group .btn { min-height: 36px; margin-top: -6px; }
+.ev-group { align-items: center; }
+.ev-group time { padding-top: 0; }
 .tl-foot { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: var(--space-3); }
 .tl-empty { margin-top: var(--space-10); max-width: 44ch; color: var(--color-text-muted); }
 .tl-empty .ico { width: 32px; height: 32px; color: var(--color-border-strong); }
