@@ -1,2 +1,3 @@
 round	change	score_before	score_after	kept	why
 0	Baseline mockup v1. Score = Nielsen/40 + audit/20 - detect findings - contrast fails - tap fails (states live/ended/unknown/empty at 1440x900, tools/score.sh). Current production page critique: 16/40 (critique.md)	-	39	-	Nielsen 29 + audit 13 (a11y 3, perf 3, theming 3, responsive 1, integrity 3) - detect 1 (monotonous-spacing) - contrast 0 - tap 2 (timeline "Show" 74x36 in live + ended)
+1	Timeline "3 inbound calls" row: Show button keeps the 44px btn-sm height (was squeezed to 36px); row centres vertically instead	39	41	yes	Tap fails 2 -> 0. Row grows ~8px; reads the same.
