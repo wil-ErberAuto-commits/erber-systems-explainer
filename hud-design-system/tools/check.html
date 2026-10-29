@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><style>html,body{margin:0}iframe{border:0;display:block}</style></head>
+<body>
+<iframe id="f" width="1440" height="900"></iframe>
+<script>
+/* Token conformance checker. Usage: check.html?page=../reference.html[&w=1440]
+   Reads the token values from the page's own :root, then flags every computed value that isn't one of them. */
+const q = new URLSearchParams(location.search);
+const PAGE = q.get('page') || '../reference.html';
+const WIDTH = Number(q.get('w') || 1440);
+const TARGET_MIN = 32;
+const SIZES = [13, 14, 16, 20, 28];
+const WEIGHTS = [400, 500, 600];
+const RADII = [0, 6, 8, 12];
+const BORDERS = [0, 1, 2];
+const INTERACTIVE = 'a[href],button,input,select,textarea,[role=tab],[role=option],[role=radio],[tabindex]:not([tabindex="-1"])';
+
+function rgba(str) {
+  const m = str.match(/rgba?\(([^)]+)\)/);
+  if (!m) return [0, 0, 0, 0];
+  const p = m[1].split(/[\s,\/]+/).filter(Boolean).map(Number);
+  return [p[0], p[1], p[2], p.length > 3 ? p[3] : 1];
+}
+const key = c => c.slice(0, 3).join(',');
+function over(top, bottom) {
+  const a = top[3] + bottom[3] * (1 - top[3]);
+  if (!a) return [0, 0, 0, 0];
+  return [0, 1, 2].map(i => (top[i] * top[3] + bottom[i] * bottom[3] * (1 - top[3])) / a).concat(a);
+}
+function lum([r, g, b]) {
+  return [r, g, b].map(v => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; })
+    .reduce((s, v, i) => s + v * [.2126, .7152, .0722][i], 0);
+}
+function ratio(a, b) { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + .05) / (y + .05); }
+function background(win, el) {
+  const layers = [];
+  for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
+    const c = rgba(win.getComputedStyle(n).backgroundColor);
+    if (c[3] > 0) { layers.push(c); if (c[3] >= 1) break; }
+  }
+  let bg = [255, 255, 255, 1];
+  for (let i = layers.length - 1; i >= 0; i--) bg = over(layers[i], bg);
+  return bg;
+}
+function label(el) {
+  const cls = typeof el.className === 'string' && el.className ? '.' + el.className.split(' ').join('.') : '';
+  return el.tagName.toLowerCase() + cls + ' "' + (el.textContent || el.getAttribute('aria-label') || el.placeholder || '').trim().replace(/\s+/g, ' ').slice(0, 32) + '"';
+}
+
+function check(win) {
+  const doc = win.document, root = win.getComputedStyle(doc.documentElement);
+  const probe = doc.createElement('i'); doc.body.appendChild(probe);
+  const palette = new Set(), spacing = new Set([0]);
+  for (const sheet of doc.styleSheets) {
+    let rules; try { rules = sheet.cssRules; } catch (e) { continue; }
+    for (const r of rules) if (r.selectorText === ':root') for (const prop of r.style) {
+      if (prop.startsWith('--color-')) { probe.style.color = root.getPropertyValue(prop).trim(); palette.add(key(rgba(win.getComputedStyle(probe).color))); }
+      if (prop.startsWith('--space-')) spacing.add(parseFloat(root.getPropertyValue(prop)));
+    }
+  }
+  probe.style.boxShadow = 'var(--shadow-overlay)';
+  const shadow = win.getComputedStyle(probe).boxShadow;
+  probe.remove();
+
+  const out = { color: [], type: [], spacing: [], radius: [], border: [], shadow: [], contrast: [], target: [] };
+  const add = (rule, el, detail) => { if (out[rule].length < 40) out[rule].push(label(el) + ' ' + detail); out[rule].n = (out[rule].n || 0) + 1; };
+  const okColor = c => c[3] === 0 || palette.has(key(c));
+
+  doc.querySelectorAll('body *').forEach(el => {
+    if (el.closest('svg') || !el.getClientRects().length) return;
+    const cs = win.getComputedStyle(el);
+    if (cs.visibility === 'hidden' || cs.display === 'none') return;
+    const hasText = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
+
+    const bg = rgba(cs.backgroundColor);
+    if (!okColor(bg)) add('color', el, 'background ' + cs.backgroundColor);
+    if (hasText) {
+      const fg = rgba(cs.color);
+      if (!okColor(fg)) add('color', el, 'text ' + cs.color);
+      const size = parseFloat(cs.fontSize), weight = Number(cs.fontWeight);
+      if (!SIZES.includes(size)) add('type', el, 'size ' + size);
+      if (!WEIGHTS.includes(weight)) add('type', el, 'weight ' + weight);
+      if (!cs.fontFamily.startsWith('"General Sans"')) add('type', el, 'family ' + cs.fontFamily);
+      const b = background(win, el), r = ratio(over(fg, b), b);
+      const need = size >= 24 ? 3 : 4.5;
+      const disabled = el.closest(':disabled,[aria-disabled=true]');
+      if (r < need && !disabled) add('contrast', el, r.toFixed(2) + ' < ' + need);
+    }
+    if (el.placeholder) {
+      const fg = rgba(win.getComputedStyle(el, '::placeholder').color), b = background(win, el), r = ratio(over(fg, b), b);
+      if (!okColor(fg)) add('color', el, 'placeholder ' + fg);
+      if (r < 4.5) add('contrast', el, 'placeholder ' + r.toFixed(2));
+    }
+    for (const side of ['Top', 'Right', 'Bottom', 'Left']) {
+      const w = parseFloat(cs['border' + side + 'Width']);
+      if (!BORDERS.includes(w)) add('border', el, side + ' width ' + w);
+      if (w > 0 && !okColor(rgba(cs['border' + side + 'Color']))) add('color', el, 'border ' + cs['border' + side + 'Color']);
+      for (const p of ['padding', 'margin']) {
+        const v = Math.abs(parseFloat(cs[p + side]));
+        if (!spacing.has(v)) add('spacing', el, p + side + ' ' + v);
+      }
+    }
+    for (const g of ['rowGap', 'columnGap']) {
+      const v = parseFloat(cs[g]);
+      if (!isNaN(v) && !spacing.has(v)) add('spacing', el, g + ' ' + v);
+    }
+    for (const c of ['TopLeft', 'TopRight', 'BottomRight', 'BottomLeft']) {
+      const v = cs['border' + c + 'Radius'];
+      const px = parseFloat(v);
+      if (!(RADII.includes(px) || px >= 999 || v === '50%')) add('radius', el, c + ' ' + v);
+    }
+    if (cs.boxShadow !== 'none' && cs.boxShadow !== shadow) add('shadow', el, cs.boxShadow);
+    if (el.matches(INTERACTIVE)) {
+      const r = el.getBoundingClientRect();
+      if (r.width < TARGET_MIN || r.height < TARGET_MIN) add('target', el, Math.round(r.width) + 'x' + Math.round(r.height));
+    }
+  });
+  const counts = Object.fromEntries(Object.entries(out).map(([k, v]) => [k, v.n || 0]));
+  return { page: PAGE, height: doc.documentElement.scrollHeight, palette: palette.size, counts, details: out };
+}
+
+(async () => {
+  const f = document.getElementById('f');
+  f.width = WIDTH;
+  await new Promise(res => { f.onload = res; f.src = PAGE; });
+  await f.contentDocument.fonts.ready;
+  f.height = f.contentDocument.documentElement.scrollHeight;
+  await new Promise(res => setTimeout(res, 300));
+  const pre = document.createElement('pre');
+  pre.id = 'out';
+  pre.textContent = JSON.stringify(check(f.contentWindow));
+  document.body.appendChild(pre);
+})();
+</script>
+</body>
+</html>
