@@ -289,15 +289,14 @@ h1 { font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height
 .actions-row .btn-primary { min-width: 168px; justify-content: center; }
 .snooze { display: flex; align-items: center; gap: var(--space-3); }
 .snooze-label { display: inline-flex; align-items: center; gap: 6px; font-weight: var(--weight-medium); color: var(--color-text-muted); min-width: 84px; }
-.seg { display: inline-flex; border: 1px solid var(--color-border-strong); border-radius: var(--radius-md); overflow: hidden; }
+.seg { display: inline-flex; gap: 2px; padding: 3px; background: var(--color-bg); border: 1px solid var(--color-border); border-radius: var(--radius-md); }
 .seg button {
   display: inline-flex; align-items: center; gap: 6px;
-  min-height: var(--tap-min); padding: 0 var(--space-4);
-  background: var(--color-surface); border: 0; border-left: 1px solid var(--color-border);
+  min-height: var(--tap-icon); padding: 0 var(--space-4);
+  background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 7px;
   font-weight: var(--weight-medium); color: var(--color-text);
 }
-.seg button:first-child { border-left: 0; }
-.seg button:hover { background: var(--color-info-bg); color: var(--color-navy); }
+.seg button:hover { background: var(--color-info-bg); border-color: var(--color-navy); color: var(--color-navy); }
 .seg kbd { margin-left: 2px; color: var(--color-text-muted); border-color: var(--color-border); }
 
 /* ---------- Done ---------- */
