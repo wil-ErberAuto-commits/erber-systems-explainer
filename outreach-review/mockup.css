@@ -306,7 +306,7 @@ h1 { font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height
 .done-ico { display: inline-flex; width: 48px; height: 48px; border-radius: 50%; align-items: center; justify-content: center; background: var(--color-success-bg); color: var(--color-success); }
 .done-ico .ico { width: 26px; height: 26px; stroke-width: 2.25; }
 .done h2 { font-size: var(--text-2xl); font-weight: var(--weight-semibold); line-height: var(--leading-tight); color: var(--color-navy-dark); margin-top: var(--space-5); }
-.done > p { font-size: var(--text-base); color: var(--color-text-muted); margin-top: var(--space-2); }
+.done > p { font-size: var(--text-base); line-height: 1.55; color: var(--color-text-muted); margin-top: var(--space-2); }
 .tally { display: flex; gap: var(--space-8); margin-top: var(--space-6); padding: var(--space-4) 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
 .tally dt { font-size: var(--text-xs); color: var(--color-text-muted); }
 .tally dd { font-size: var(--text-xl); font-weight: var(--weight-semibold); }
@@ -316,7 +316,7 @@ h1 { font-size: var(--text-xl); font-weight: var(--weight-semibold); line-height
 .empty { flex: 1; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 0 0 var(--space-10) calc(var(--space-10) * 3); max-width: 760px; }
 .empty-ico { width: 40px; height: 40px; fill: none; stroke: var(--color-border-strong); stroke-width: 1.5; stroke-linejoin: round; }
 .empty h2 { font-size: var(--text-2xl); font-weight: var(--weight-semibold); color: var(--color-navy-dark); line-height: var(--leading-tight); margin-top: var(--space-4); }
-.empty p { font-size: var(--text-base); color: var(--color-text-muted); margin-top: var(--space-2); max-width: 52ch; }
+.empty p { font-size: var(--text-base); line-height: 1.55; color: var(--color-text-muted); margin-top: var(--space-2); max-width: 52ch; }
 .empty-actions { display: flex; gap: var(--space-3); margin-top: var(--space-6); }
 
 /* ---------- Toast ---------- */
