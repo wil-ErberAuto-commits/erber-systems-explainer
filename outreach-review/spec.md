@@ -8,6 +8,8 @@ Reference: `mockup.html` + `mockup.css` (open in Chrome at 1440×900). States: `
 | `state-text-allowed-undo.png` | Previous customer just logged as Booked and dismissed from the list (toast with Undo), next customer selected, text draft allowed |
 | `state-empty.png` | Empty tab (Declined work, 0) |
 | `state-done.png` | Batch finished: list is clear, detail pane shows the tally and next-batch action |
+| `state-shortcuts.png` | Keyboard shortcut sheet open (`?state=shortcuts`) |
+| `responsive-1280.png`, `responsive-800.png`, `responsive-390.png` | Breakpoint checks (default state) |
 
 ## 1. Layout (1440×900 desktop)
 
@@ -27,7 +29,11 @@ Reference: `mockup.html` + `mockup.css` (open in Chrome at 1440×900). States: `
 - **Work grid:** `grid-template-columns: 464px 1fr`. At 1440 the detail pane is 696px wide.
 - **Dividers:** 1px `--color-border` between rail and main, and between list and detail. Row dividers use the local `--hairline: #E2E6EE` (same value as `--color-disabled-bg`).
 - **No cards inside panes.** The only filled block in the detail pane is the script/draft well (`--color-bg`, radius `--radius-md`).
-- **Below 1280px (not mocked):** list 400px, and the detail pane's outcome bar wraps Snooze below the outcome buttons, as it already does. Below 1024px, collapse the rail to icons and keep list + detail.
+- **Both grid tracks use `minmax(0, 1fr)`** so long content never pushes the detail pane past the viewport.
+- **≤1365px:** rail 248px, list 360px. Top-bar tools go icon-only (44×44, label kept as the accessible name). The page title and lede stack. Tabs scroll sideways. The detail header stacks (phone + Copy number on one row under the name). The outcome and snooze rows may wrap. The footer drops the "↑ ↓ move" hint and keeps the Shortcuts button.
+- **≤1023px:** the rail becomes a top strip (live status, search, Overview/Outreach), and recent customers are hidden. The list is 320px. The staff name is hidden.
+- **≤767px:** single column. The top-nav links are hidden, the list caps at 40vh, the detail follows, and the outcome bar is sticky at the bottom with Called full width. Snooze sits on its own row and scrolls sideways.
+- **Known rough edges:** at about 800px the outcome bar takes three rows. On phones the Snooze options scroll sideways and "Sign out" crowds the top bar.
 
 ## 2. Type (General Sans, fixed px scale from tokens)
 
@@ -87,8 +93,10 @@ The radius is `--radius-md` on every button.
 
 ### Other components
 
-- **Snooze group:** one outlined segmented control with options 1 day (1), 7 days (7), 30 days, and Pick a date. "Pick a date" opens a calendar popover (escape the pane with `position: fixed` or a popover) defaulting to today + 14. The old separate "Snooze until date" button is removed.
-- **Keyboard hints:** a `kbd` chip (20px, 12px text, 1px border) inside the button it triggers. Shortcuts: C Called, B Booked, N Not interested, 1 / 7 snooze, S copy script, T copy text, U undo, ↑↓ move, Enter start next batch, ? opens the shortcut sheet. The list footer shows only "↑ ↓ move · ? shortcuts".
+- **Snooze group:** an inset track (`--color-bg` fill, 1px `--color-border`, 3px padding, 2px gaps) holding four 44px segments (white, 1px border, 7px radius, no wrapping): 1 day (1), 7 days (7), 30 days, and Pick a date. "Pick a date" opens a calendar popover (escape the pane with `position: fixed` or a popover) defaulting to today + 14. The old separate "Snooze until date" button is removed.
+- **Keyboard hints:** a `kbd` chip (20px, 12px text, 1px border) inside the button it triggers. Shortcuts: C Called, B Booked, N Not interested, 1 / 7 snooze, S copy script, T copy text, U undo, ↑↓ move, Enter start next batch, ? opens the shortcut sheet. The chips are `aria-hidden="true"`, and the button carries `aria-keyshortcuts` (for example `aria-keyshortcuts="c"`), so screen readers announce "Called", not "Called C". The list footer shows "↑ ↓ move" plus a real 44px "? Shortcuts" button.
+- **Shortcut sheet:** the Shortcuts button (or ?) opens a popover (`popover`, light dismiss, Esc). It's 416px wide, anchored above the list footer, with a radius of `--radius-lg`. It has the heading "Keyboard shortcuts" and a 44px close button. Rows have zebra fill (`--color-bg` on odd rows) and no dividers; each pairs a plain-language action with its keys. The foot line reads "Every outcome removes the customer from the list. Undo brings them back."
+- **Sort control:** "Most overdue first" is a real 44px button (`aria-haspopup="listbox"`) that opens the sort options. It must never be a styled label.
 - **Tabs:** underline style, 48px tall, label plus a muted count. Active: navy text, semibold, 3px navy bottom bar. Hover: `--color-border` bottom bar.
 - **Consent notice (no text consent):**
   - Placement: under the "Text draft" heading, where the draft would be.
@@ -141,7 +149,8 @@ Outcome labels (Called, Booked, Not interested) are unchanged.
 ## 9. Accessibility
 
 - Every text/background pair is ≥4.5:1. The `impeccable detect` run on the mockup reports no contrast failures.
-- Targets: 48px minimum (`--tap-min`), 56px for outcome buttons, 44px for compact secondaries (copy buttons, toast Undo, top-bar tools).
+- Targets: 48px minimum (`--tap-min`), 56px for outcome buttons, 44px for compact secondaries (copy buttons, toast Undo, top-bar tools, snooze segments, sort, Shortcuts, sheet close).
+- Tabs: `role=tab` with `aria-controls` pointing to a single `role=tabpanel` that's labelled by the active tab. Roving `tabindex` (active tab 0, others −1).
 - Status is never shown by colour alone: consent uses an icon and words, and every outcome is announced in the toast text.
 - The toast and batch line are `role="status"` live regions. The outcome bar is labelled "Log the outcome". Snooze is a labelled `role="group"`.
 - `prefers-reduced-motion` drops transitions to 0 (already in tokens). Motion stays limited to 120–200ms colour fades.
@@ -153,3 +162,8 @@ Outcome labels (Called, Booked, Not interested) are unchanged.
 3. **Consent:** staff cannot change consent on Outreach. No consent control on this page. Notice copy is fixed: "Call only. No text consent on file. Update it in the customer record if they agree."
 
 Still open: whether the batch size stays at 25.
+
+## 11. Follow-ups not in the mockup
+
+- **"Put back" after the Undo window:** open "Worked recently" in place, with each customer's outcome, time, and a 44px Put back button that clears the outcome and returns them to the top of the list. Hill-climb round 10 tried this and reverted it. It tied on score, the outcome tags wrapped, and the detail pane kept showing a queue customer. Build it with non-wrapping tags, and select the worked customer in the detail pane.
+- **Fonts:** serve WOFF2 with `font-display: swap` instead of OTF. No converter was available here.
