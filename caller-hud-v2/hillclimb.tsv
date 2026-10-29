@@ -1,12 +1,8 @@
-round	change	check_sh_offToken	checklist_score	decision	note
-0	Baseline: option-a.html as pushed	0	27/30	-	Fails 13 (meta set as 14px lede), 24 (no empty state), 29 (no ended/unknown/empty states)
-1	Sticky compact header (identity, status, actions) inside the content column	0	27/30	kept	Tie, clear win: actions no longer scroll away on long history
-2	Overdue chip moved into the header; panel row shows due date as text	0	27/30	kept	Tie, clear win: overdue visible near the top, one chip not two
-3	Lighter header: actions on the title line, chips + 13px muted meta below, less padding	0	28/30	kept	Fixes 13. First try wrapped badly (title over 3 lines) and was fixed in-round
-4	Remove redundant Add note ghost button (composer is docked)	0	28/30	kept	Tie, clear win: stops title truncation at 1280
-5	Drop duplicate Line panel group; Caller ID moves into Customer group	0	28/30	kept	Tie, clear win: number no longer shown twice
-6	Real states via ?state=: call ended chip, empty timeline (.empty with tile, title, body, one action)	0	29/30	kept	Fixes 24; partial 29
-7	One-step customer linking for unknown caller: list of matches, one Link button per row	0	29/30	kept	Tie, clear win: retry of the lost round-6 idea
-8	Trial: fold Why they are calling into the composer	0	28/30	reverted	Loses labelled field and record hint (23)
-9	Every visible fact follows the state (sidebar, panel, timeline)	0	29/30	kept	Tie, clear win: no Customer A data on Customer B
-10	One status source: timeline row drops its duplicate Live chip	0	29/30	kept	Tie, clear win: calmer, status lives in the header
+round	change	score_before	score_after	gate_failures	kept	why
+0	Polished Option A baseline: sticky compact caller header (name, actions, live chip, overdue chip, phone/since/visits), states live/ended/unknown/empty, <=1365 layout with the panel below the column. Original Option A scored 27/30 (fails 13 meta in body text, 16 untested at 1280, 29 one state only)	-	27	0	-	Checklist 27/30: fails 16 (ended sidebar "Last call ended 12:19 PM" wraps), 17 (sticky header adds its own border, styling outside a component), 29 (no caller-lookup loading state; the system has no loading component)
+1	Sticky caller header drops its own 1px bottom border; spacing separates it (it keeps a canvas background so scrolled rows pass under it)	27	28	0	yes	Item 17 passes: the header wrapper is layout only. Reads calmer and closer to the Claude chat header.
+2	Call-ended sidebar line shortened to "Last call 12:19 PM"	28	29	0	yes	Item 16 passes: the line was wrapping "12:19 / PM" onto a third line in the 248px sidebar.
+3	Today timeline row says "Inbound call · in progress" instead of repeating the green Live chip (live and unknown states)	29	29	0	yes	Tie with a clear visual win: one live-status chip on screen (header) instead of two; the timeline row stays calm.
+4	Remove the Number row from the panel Line group (the number is already in the header)	29	29	0	no	Tie, no clear visual win: the panel loses the number staff read back, and a one-row Line group looks thin. Reverted.
+5	Sticky header top padding 32 -> 24 to give the timeline 8px more	29	29	0	no	Tie, no clear visual win: 8px is not felt, and the name stops lining up with the panel "Details" heading (both sat 40px below the top bar). Reverted.
+6	Unknown caller: remove the header "Link to a customer" button so linking has one path (the match list)	29	29	0	yes	Tie with a clear visual win: one way to link a customer instead of two, and a lighter header. (Row recovered from the agent transcript; the agent stopped before logging it.)
