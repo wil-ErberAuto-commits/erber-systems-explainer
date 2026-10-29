@@ -126,11 +126,9 @@
           <div class="btn-row" data-only="live ended empty">
             <button class="btn btn-primary" aria-keyshortcuts="r"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-wrench"/></svg>Create RO <span class="kbd" aria-hidden="true">R</span></button>
             <button class="btn btn-secondary" aria-keyshortcuts="f"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-calendar"/></svg>Follow up <span class="kbd" aria-hidden="true">F</span></button>
-            <button class="btn btn-ghost" aria-keyshortcuts="n"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-note"/></svg>Add note <span class="kbd" aria-hidden="true">N</span></button>
           </div>
           <div class="btn-row" data-only="unknown">
             <button class="btn btn-primary"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-users"/></svg>Create customer</button>
-            <button class="btn btn-ghost" aria-keyshortcuts="n"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-note"/></svg>Add note <span class="kbd" aria-hidden="true">N</span></button>
           </div>
         </div>
         <div class="who-status">
@@ -201,7 +199,7 @@
     <div class="dock">
       <div class="composer">
         <label class="sr" for="note">Add a note</label>
-        <textarea id="note" rows="2" placeholder="Add a note about this call…"></textarea>
+        <textarea id="note" rows="2" aria-keyshortcuts="n" placeholder="Add a note about this call…"></textarea>
         <div class="composer-bar">
           <div class="seg" role="radiogroup" aria-label="Note type">
             <button role="radio" aria-checked="true">Note</button>
