@@ -269,6 +269,7 @@
   const requested = new URLSearchParams(location.search).get('state');
   const state = states.includes(requested) ? requested : 'live';
   document.querySelectorAll('[data-only]').forEach(el => { el.hidden = !el.dataset.only.split(' ').includes(state); });
+  if (state === 'ended') document.getElementById('note').placeholder = 'Add a wrap-up note for the next person who picks up…';
 </script>
 </body>
 </html>

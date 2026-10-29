@@ -8,3 +8,5 @@ round	change	score_before	score_after	gate_failures	kept	why
 6	Unknown caller: remove the header "Link to a customer" button so linking has one path (the match list)	29	29	0	yes	Tie with a clear visual win: one way to link a customer instead of two, and a lighter header. (Row recovered from the agent transcript; the agent stopped before logging it.)
 7	Live: make the suggested reason (Overdue oil change) a .link that fills the Why field	29	29	0	yes	Tie with a clear win: suggestion becomes one click, existing .link component, no new values
 8	Remove the header Add note button (live/ended/empty/unknown); N shortcut moves to the docked composer	29	29	0	yes	Tie with a clear win: composer is always visible, header goes from 3 actions to 2
+9	Header: drop "Customer since 2024 · 7 visits" (repeated in the Customer card)	29	29	0	no	Tie, no clear win: returning-customer context near the name is useful; reverted
+10	Ended state: composer placeholder prompts a wrap-up note for the next person	29	29	0	yes	Tie with a small clear win: the ended state now asks for the hand-off note it needs
