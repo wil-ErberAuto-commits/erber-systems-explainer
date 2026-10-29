@@ -113,23 +113,23 @@
         </div>
       </div>
       <div class="call-actions" data-only="live ended empty">
-        <button class="btn btn-primary btn-lg"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg>Create RO <kbd>R</kbd></button>
-        <button class="btn btn-secondary btn-lg"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>Follow up <kbd>F</kbd></button>
-        <button class="btn btn-ghost btn-lg"><svg class="ico" aria-hidden="true"><use href="#i-note"/></svg>Add note <kbd>N</kbd></button>
+        <button class="btn btn-primary btn-lg" aria-keyshortcuts="r"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg>Create RO <kbd aria-hidden="true">R</kbd></button>
+        <button class="btn btn-secondary btn-lg" aria-keyshortcuts="f"><svg class="ico" aria-hidden="true"><use href="#i-calendar"/></svg>Follow up <kbd aria-hidden="true">F</kbd></button>
+        <button class="btn btn-ghost btn-lg" aria-keyshortcuts="n"><svg class="ico" aria-hidden="true"><use href="#i-note"/></svg>Add note <kbd aria-hidden="true">N</kbd></button>
       </div>
       <div class="call-actions" data-only="unknown">
         <button class="btn btn-primary btn-lg"><svg class="ico" aria-hidden="true"><use href="#i-user-plus"/></svg>Create customer</button>
         <button class="btn btn-secondary btn-lg"><svg class="ico" aria-hidden="true"><use href="#i-link"/></svg>Link to a customer</button>
-        <button class="btn btn-ghost btn-lg"><svg class="ico" aria-hidden="true"><use href="#i-note"/></svg>Add note <kbd>N</kbd></button>
+        <button class="btn btn-ghost btn-lg" aria-keyshortcuts="n"><svg class="ico" aria-hidden="true"><use href="#i-note"/></svg>Add note <kbd aria-hidden="true">N</kbd></button>
       </div>
     </section>
 
     <div class="hud">
       <!-- Customer column -->
-      <section class="cust" aria-labelledby="cust-h">
+      <section class="cust" aria-label="Caller">
         <header class="cust-head">
           <div data-only="live ended">
-            <h1 id="cust-h">Sample Customer A</h1>
+            <h1>Sample Customer A</h1>
             <p class="cust-meta">Customer since 2024 · 7 visits · Last visit Sep 22, 2026</p>
             <p class="cust-flags"><span class="chip chip-info"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-history"/></svg>4 calls in 14 days</span></p>
           </div>
@@ -203,21 +203,21 @@
           <textarea id="note" rows="2" placeholder="Add a note about this call…"></textarea>
           <div class="composer-row">
             <div class="seg" role="radiogroup" aria-label="Note type">
-              <button role="radio" aria-checked="true">Note</button>
-              <button role="radio" aria-checked="false">Confirmed with customer</button>
+              <button role="radio" aria-checked="true" tabindex="0">Note</button>
+              <button role="radio" aria-checked="false" tabindex="-1">Confirmed with customer</button>
             </div>
-            <button class="btn btn-secondary">Add note <kbd>⌘↵</kbd></button>
+            <button class="btn btn-secondary" aria-keyshortcuts="Meta+Enter">Add note <kbd aria-hidden="true">⌘↵</kbd></button>
           </div>
         </div>
 
         <nav class="tabs tl-tabs" role="tablist" aria-label="Timeline filter" data-only="live ended">
-          <button role="tab" aria-selected="true">All <span data-only="live">8</span><span data-only="ended">9</span></button>
-          <button role="tab" aria-selected="false">Visits <span>2</span></button>
-          <button role="tab" aria-selected="false">Declined <span>1</span></button>
-          <button role="tab" aria-selected="false">Calls &amp; notes <span data-only="live">6</span><span data-only="ended">7</span></button>
+          <button role="tab" id="tl-all" aria-controls="tl-panel" aria-selected="true" tabindex="0">All <span data-only="live">8</span><span data-only="ended">9</span></button>
+          <button role="tab" id="tl-visits" aria-controls="tl-panel" aria-selected="false" tabindex="-1">Visits <span>2</span></button>
+          <button role="tab" id="tl-declined" aria-controls="tl-panel" aria-selected="false" tabindex="-1">Declined <span>1</span></button>
+          <button role="tab" id="tl-calls" aria-controls="tl-panel" aria-selected="false" tabindex="-1">Calls &amp; notes <span data-only="live">6</span><span data-only="ended">7</span></button>
         </nav>
 
-        <ol class="events" data-only="live ended">
+        <ol class="events" id="tl-panel" role="tabpanel" aria-labelledby="tl-all" data-only="live ended">
           <li class="ev ev-call" data-only="ended">
             <time>Today</time>
             <div><p class="ev-title">Inbound call · 0:05</p><p class="ev-meta">12:19 PM · Answered by Sample Staff</p></div>
@@ -229,7 +229,7 @@
           <li class="ev ev-group">
             <time>Oct 16–20</time>
             <div><p class="ev-title">3 inbound calls · no notes</p></div>
-            <button class="btn btn-ghost btn-sm">Show</button>
+            <button class="btn btn-ghost btn-sm" aria-expanded="false" aria-label="Show 3 inbound calls">Show</button>
           </li>
           <li class="ev ev-visit">
             <time>Sep 22</time>
