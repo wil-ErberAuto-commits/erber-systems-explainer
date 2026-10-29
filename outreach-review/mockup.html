@@ -23,6 +23,7 @@
     <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4.5" y="5.5" width="15" height="14" rx="2"/><path d="M4.5 10h15M9 3.5v4M15 3.5v4"/></symbol>
     <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
     <symbol id="i-message" viewBox="0 0 24 24"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19 17h-8l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5Z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></symbol>
     <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13.5 6.5 5h11l2.5 8.5V19H4v-5.5Z"/><path d="M4 13.5h4.5l1 2h5l1-2H20"/></symbol>
   </defs>
 </svg>
@@ -164,7 +165,10 @@
 
         <footer class="list-foot">
           <button class="disclose"><svg class="ico ico-sm"><use href="#i-chevron"/></svg>Worked recently <span data-only="withheld empty">41</span><span data-only="text">42</span><span data-only="done">66</span></button>
-          <p class="keys"><kbd>↑</kbd><kbd>↓</kbd> move <span aria-hidden="true">·</span> <kbd>?</kbd> shortcuts</p>
+          <div class="keys">
+            <span><kbd>↑</kbd><kbd>↓</kbd> move</span>
+            <button class="keys-btn" popovertarget="shortcuts" aria-keyshortcuts="?"><kbd aria-hidden="true">?</kbd> Shortcuts</button>
+          </div>
         </footer>
       </section>
 
@@ -301,8 +305,30 @@
   </main>
 </div>
 
+<div id="shortcuts" class="sheet" popover aria-labelledby="sheet-h">
+  <div class="sheet-head">
+    <h2 id="sheet-h">Keyboard shortcuts</h2>
+    <button class="btn btn-ghost btn-icon" popovertarget="shortcuts" popovertargetaction="hide" aria-label="Close">
+      <svg class="ico" aria-hidden="true"><use href="#i-close"/></svg>
+    </button>
+  </div>
+  <dl class="sheet-list">
+    <div><dt>Next or previous customer</dt><dd><kbd>↑</kbd><kbd>↓</kbd></dd></div>
+    <div><dt>Log Called</dt><dd><kbd>C</kbd></dd></div>
+    <div><dt>Log Booked</dt><dd><kbd>B</kbd></dd></div>
+    <div><dt>Log Not interested</dt><dd><kbd>N</kbd></dd></div>
+    <div><dt>Snooze 1 day / 7 days</dt><dd><kbd>1</kbd><kbd>7</kbd></dd></div>
+    <div><dt>Copy call script / text draft</dt><dd><kbd>S</kbd><kbd>T</kbd></dd></div>
+    <div><dt>Undo the last outcome (8 seconds)</dt><dd><kbd>U</kbd></dd></div>
+    <div><dt>Start the next batch</dt><dd><kbd>Enter</kbd></dd></div>
+    <div><dt>Show or hide this list</dt><dd><kbd>?</kbd></dd></div>
+  </dl>
+  <p class="sheet-foot">Every outcome removes the customer from the list. Undo brings them back.</p>
+</div>
+
 <script>
-  const state = new URLSearchParams(location.search).get('state') || 'withheld';
+  const requested = new URLSearchParams(location.search).get('state') || 'withheld';
+  const state = requested === 'shortcuts' ? 'withheld' : requested;
   document.body.dataset.state = state;
   document.querySelectorAll('[data-only]').forEach(el => {
     el.hidden = !el.dataset.only.split(' ').includes(state);
@@ -321,6 +347,7 @@
   });
   const first = document.querySelector('.row:not([hidden])');
   if (first) document.querySelectorAll('.row').forEach(r => r.tabIndex = r === first ? 0 : -1);
+  if (requested === 'shortcuts') document.getElementById('shortcuts').showPopover();
 </script>
 </body>
 </html>
