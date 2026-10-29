@@ -150,7 +150,7 @@
           <label for="why">Why they're calling</label>
           <input class="input" id="why" placeholder="What do they need?" data-only="live unknown empty">
           <input class="input" id="why-saved" aria-label="Why they're calling" value="Wants to book the overdue oil change, Friday before 8 AM." data-only="ended">
-          <p class="help" data-only="live">Enter saves. Their record suggests: overdue oil change.</p>
+          <p class="help" data-only="live">Enter saves. Suggested from their record: <button type="button" class="link" onclick="document.getElementById('why').value='Overdue oil change';document.getElementById('why').focus()">Overdue oil change</button></p>
           <p class="help" data-only="unknown empty">Enter saves.</p>
           <p class="help" data-only="ended">Saved 12:19 PM. Edit and press Enter to update.</p>
         </div>
