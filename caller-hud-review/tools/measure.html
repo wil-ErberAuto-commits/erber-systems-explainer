@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><style>html,body{margin:0}iframe{border:0;display:block}</style></head>
+<body>
+<iframe id="f" width="1440" height="900"></iframe>
+<script>
+const STATES = ['live', 'ended', 'unknown', 'empty'];
+const TAP_MIN = 44;
+const INTERACTIVE = 'a[href],button,input,select,textarea,[role=tab],[role=option],[tabindex]:not([tabindex="-1"])';
+
+function rgba(str) {
+  const m = str.match(/rgba?\(([^)]+)\)/);
+  if (!m) return [0, 0, 0, 0];
+  const p = m[1].split(/[\s,\/]+/).filter(Boolean).map(Number);
+  return [p[0], p[1], p[2], p.length > 3 ? p[3] : 1];
+}
+function over(top, bottom) {
+  const a = top[3] + bottom[3] * (1 - top[3]);
+  if (!a) return [0, 0, 0, 0];
+  return [0, 1, 2].map(i => (top[i] * top[3] + bottom[i] * bottom[3] * (1 - top[3])) / a).concat(a);
+}
+function lum([r, g, b]) {
+  return [r, g, b].map(v => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; })
+    .reduce((s, v, i) => s + v * [.2126, .7152, .0722][i], 0);
+}
+function ratio(a, b) { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + .05) / (y + .05); }
+
+function visible(win, el) {
+  if (!el.getClientRects().length) return false;
+  const cs = win.getComputedStyle(el);
+  if (cs.visibility === 'hidden') return false;
+  const r = el.getBoundingClientRect();
+  return r.width > 0 && r.height > 0 && r.bottom > 0 && r.right > 0 && r.top < 900 && r.left < 1440;
+}
+function background(win, el) {
+  const layers = [];
+  for (let n = el; n && n.nodeType === 1; n = n.parentElement) {
+    const c = rgba(win.getComputedStyle(n).backgroundColor);
+    if (c[3] > 0) { layers.push(c); if (c[3] >= 1) break; }
+  }
+  let bg = [255, 255, 255, 1];
+  for (let i = layers.length - 1; i >= 0; i--) bg = over(layers[i], bg);
+  return bg;
+}
+function opacity(win, el) {
+  let o = 1;
+  for (let n = el; n && n.nodeType === 1; n = n.parentElement) o *= Number(win.getComputedStyle(n).opacity);
+  return o;
+}
+function label(el) {
+  return (el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.split(' ')[0] : '') +
+    ' "' + (el.textContent || el.getAttribute('aria-label') || el.placeholder || '').trim().replace(/\s+/g, ' ').slice(0, 40) + '"');
+}
+
+function measure(state) {
+  const win = document.getElementById('f').contentWindow, doc = win.document;
+  const contrast = [], taps = [];
+  doc.querySelectorAll('body *').forEach(el => {
+    if (!visible(win, el)) return;
+    const hasText = [...el.childNodes].some(n => n.nodeType === 3 && n.textContent.trim());
+    if (hasText) {
+      const cs = win.getComputedStyle(el);
+      const fg = rgba(cs.color); fg[3] *= opacity(win, el);
+      const bg = background(win, el);
+      const r = ratio(over(fg, bg), bg);
+      const size = parseFloat(cs.fontSize), weight = Number(cs.fontWeight);
+      const need = (size >= 24 || (size >= 18.66 && weight >= 700)) ? 3 : 4.5;
+      if (r < need) contrast.push({ el: label(el), ratio: +r.toFixed(2), need });
+    }
+    if (el.placeholder) {
+      const fg = rgba(win.getComputedStyle(el, '::placeholder').color), bg = background(win, el);
+      const r = ratio(over(fg, bg), bg);
+      if (r < 4.5) contrast.push({ el: label(el) + ' placeholder', ratio: +r.toFixed(2), need: 4.5 });
+    }
+  });
+  doc.querySelectorAll(INTERACTIVE).forEach(el => {
+    if (!visible(win, el)) return;
+    const r = el.getBoundingClientRect();
+    if (r.width < TAP_MIN || r.height < TAP_MIN) taps.push({ el: label(el), w: Math.round(r.width), h: Math.round(r.height) });
+  });
+  return { state, contrastFails: contrast.length, tapFails: taps.length, contrast, taps };
+}
+
+(async () => {
+  const f = document.getElementById('f'), results = [];
+  for (const s of STATES) {
+    await new Promise(res => { f.onload = res; f.src = '../mockup.html?state=' + s; });
+    await f.contentDocument.fonts.ready;
+    await new Promise(res => setTimeout(res, 300));
+    results.push(measure(s));
+  }
+  const pre = document.createElement('pre');
+  pre.id = 'out';
+  pre.textContent = JSON.stringify({
+    contrastFails: results.reduce((n, r) => n + r.contrastFails, 0),
+    tapFails: results.reduce((n, r) => n + r.tapFails, 0),
+    results
+  });
+  document.body.appendChild(pre);
+})();
+</script>
+</body>
+</html>
