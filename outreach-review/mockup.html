@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Outreach · Caller HUD (design mockup)</title>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="mockup.css">
+</head>
+<body data-state="withheld">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M5 4h3.2l1.6 4-2 1.3a11 11 0 0 0 6.9 6.9l1.3-2 4 1.6V19a1.5 1.5 0 0 1-1.6 1.5A16.5 16.5 0 0 1 3.5 5.6 1.5 1.5 0 0 1 5 4Z"/></symbol>
+    <symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="9.5" rx="2"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6.5 16.5V11a5.5 5.5 0 0 1 11 0v5.5l1.5 1.5H5l1.5-1.5Z"/><path d="M10 20.5h4"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4 3.5 19h17L12 4Z"/><path d="M12 10v4.5M12 17v.01"/></symbol>
+    <symbol id="i-popout" viewBox="0 0 24 24"><path d="M13.5 4.5h6v6M19.5 4.5l-8 8"/><path d="M17.5 13.5v4.5a1.5 1.5 0 0 1-1.5 1.5H6A1.5 1.5 0 0 1 4.5 18V8A1.5 1.5 0 0 1 6 6.5h4.5"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8"/><path d="M12 7.5V12l3 2"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4.5" y="5.5" width="15" height="14" rx="2"/><path d="M4.5 10h15M9 3.5v4M15 3.5v4"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M5 5.5h14a1.5 1.5 0 0 1 1.5 1.5v8.5A1.5 1.5 0 0 1 19 17h-8l-4.5 3.5V17H5a1.5 1.5 0 0 1-1.5-1.5V7A1.5 1.5 0 0 1 5 5.5Z"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6.5 6.5 11 11M17.5 6.5l-11 11"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M4 13.5 6.5 5h11l2.5 8.5V19H4v-5.5Z"/><path d="M4 13.5h4.5l1 2h5l1-2H20"/></symbol>
+  </defs>
+</svg>
+
+<header class="topbar">
+  <img class="logo" src="assets/erber-logo-white.png" alt="Erber Auto" width="160" height="22">
+  <nav class="topnav" aria-label="Apps">
+    <a href="#">Front desk</a>
+    <a href="#" aria-current="page">Caller HUD</a>
+    <a href="#">Feedback</a>
+    <a href="#">Parts</a>
+    <a href="#">AI setup</a>
+  </nav>
+  <div class="topbar-tools">
+    <button class="tool" aria-pressed="true"><svg class="ico"><use href="#i-bell"/></svg>Chime on</button>
+    <button class="tool" aria-pressed="true"><svg class="ico"><use href="#i-alert"/></svg>Alerts on</button>
+    <button class="tool" title="Open Caller HUD in its own window"><svg class="ico"><use href="#i-popout"/></svg>Pop out</button>
+    <span class="topbar-sep" aria-hidden="true"></span>
+    <span class="who">Sample Staff</span>
+    <button class="tool tool-quiet">Sign out</button>
+  </div>
+</header>
+
+<div class="app">
+  <aside class="rail" aria-label="Caller HUD">
+    <div class="live">
+      <span class="live-dot" aria-hidden="true"></span>
+      <div>
+        <p class="live-title">Listening for calls</p>
+        <p class="live-sub">No incoming call right now</p>
+      </div>
+    </div>
+
+    <form class="search" role="search" onsubmit="return false">
+      <label for="q">Find a customer</label>
+      <div class="search-row">
+        <svg class="ico" aria-hidden="true"><use href="#i-search"/></svg>
+        <input id="q" type="search" placeholder="Name, RO #, or phone" autocomplete="off" enterkeyhint="search">
+      </div>
+      <p class="hint">Enter to search the local shop mirror</p>
+    </form>
+
+    <nav class="railnav" aria-label="Views">
+      <a href="#">Overview <span class="count">0</span></a>
+      <a href="#" aria-current="page">Outreach <span class="count">984</span></a>
+    </nav>
+
+    <section class="recent" aria-labelledby="recent-h">
+      <h2 id="recent-h">Recent customers <span>9 today</span></h2>
+      <ul>
+        <li><a href="#"><span class="r-name">Sample Caller 1</span><span class="r-meta">(208) 555-0101</span><time>9:55 AM</time></a></li>
+        <li><a href="#"><span class="r-name">Sample Caller 2</span><span class="r-meta">(208) 555-0102</span><time>9:43 AM</time></a></li>
+        <li><a href="#"><span class="r-name">Sample Fleet Co.</span><span class="r-meta">(208) 555-0103</span><time>9:38 AM</time></a></li>
+        <li><a href="#"><span class="r-name r-unknown">Unknown caller</span><span class="r-meta">(208) 555-0104</span><time>9:36 AM</time></a></li>
+        <li><a href="#"><span class="r-name">Sample Caller 3</span><span class="r-meta">(208) 555-0105</span><time>9:33 AM</time></a></li>
+        <li><a href="#"><span class="r-name">Sample Caller 4</span><span class="r-meta">(208) 555-0106</span><time>9:25 AM</time></a></li>
+        <li><a href="#"><span class="r-name">Sample Caller 5</span><span class="r-meta">(208) 555-0107</span><time>9:22 AM</time></a></li>
+        <li><a href="#"><span class="r-name r-unknown">Unknown caller</span><span class="r-meta">(208) 555-0108</span><time>9:21 AM</time></a></li>
+        <li><a href="#"><span class="r-name">Sample Caller 6</span><span class="r-meta">(208) 555-0109</span><time>9:19 AM</time></a></li>
+      </ul>
+    </section>
+  </aside>
+
+  <main class="main">
+    <div class="main-head">
+      <div class="title-row">
+        <h1>Outreach</h1>
+        <p class="lede">Copy the script, call or text from your own phone, then log what happened. Nothing on this page contacts the customer.</p>
+      </div>
+      <nav class="tabs" role="tablist" aria-label="Call lists">
+        <button role="tab" aria-controls="outreach-panel" id="tab-all" data-tab="all">All <span>984</span></button>
+        <button role="tab" aria-controls="outreach-panel" id="tab-checkin" data-tab="checkin">Check-in <span>60</span></button>
+        <button role="tab" aria-controls="outreach-panel" id="tab-declined" data-tab="declined">Declined work <span data-only="withheld text done">2</span><span data-only="empty">0</span></button>
+        <button role="tab" aria-controls="outreach-panel" id="tab-due" data-tab="due">Due service <span data-only="withheld empty">288</span><span data-only="text">287</span><span data-only="done">263</span></button>
+        <button role="tab" aria-controls="outreach-panel" id="tab-lapsed" data-tab="lapsed">Lapsed <span>439</span></button>
+        <button role="tab" aria-controls="outreach-panel" id="tab-cold" data-tab="cold">Cold outreach <span>195</span></button>
+      </nav>
+    </div>
+
+    <div id="outreach-panel" role="tabpanel" class="panel">
+    <!-- Empty state: the whole work area -->
+    <section class="empty" data-only="empty" aria-labelledby="empty-h">
+      <svg class="empty-ico" aria-hidden="true"><use href="#i-inbox"/></svg>
+      <h2 id="empty-h">No declined work to follow up</h2>
+      <p>When a customer passes on recommended work, they'll be listed here for a follow-up call. Nothing is waiting right now.</p>
+      <div class="empty-actions">
+        <button class="btn btn-primary">Work Due service <span class="btn-count">288</span></button>
+        <button class="btn btn-ghost">Show all lists</button>
+      </div>
+    </section>
+
+    <div class="work" data-only="withheld text done">
+      <!-- List pane -->
+      <section class="list" aria-labelledby="list-h">
+        <header class="list-head">
+          <div class="list-head-row">
+            <h2 id="list-h">Due service</h2>
+            <button class="sort" aria-haspopup="listbox" aria-label="Sort: most overdue first">Most overdue first <svg class="ico ico-sm" aria-hidden="true"><use href="#i-chevron"/></svg></button>
+          </div>
+          <div class="batch">
+            <p data-only="withheld"><strong>5 left</strong> in this batch of 25 · 288 open in all</p>
+            <p data-only="text"><strong>4 left</strong> in this batch of 25 · 287 open in all</p>
+            <p data-only="done"><strong>Batch done</strong> · 25 of 25 worked</p>
+            <div class="meter" aria-hidden="true"><span></span></div>
+          </div>
+        </header>
+
+        <ol class="rows" role="listbox" aria-label="Customers to call">
+          <li class="row" data-id="a" role="option" tabindex="0">
+            <div class="row-top"><span class="row-name">Sample Customer A</span><span class="row-when">40 days over</span></div>
+            <p class="row-reason">Oil change · 2014 Ford Expedition</p>
+            <p class="row-flags"><span class="flag"><svg class="ico ico-sm"><use href="#i-lock"/></svg>Call only</span><span class="row-phone">(208) 555-0142</span></p>
+          </li>
+          <li class="row" data-id="b" role="option" tabindex="-1">
+            <div class="row-top"><span class="row-name">Sample Customer B</span><span class="row-when">40 days over</span></div>
+            <p class="row-reason">Oil change · 2020 GMC Yukon XL</p>
+            <p class="row-flags"><span class="flag flag-ok"><svg class="ico ico-sm"><use href="#i-message"/></svg>Text OK</span><span class="row-phone">(208) 555-0177</span></p>
+          </li>
+          <li class="row" data-id="c" role="option" tabindex="-1">
+            <div class="row-top"><span class="row-name">Sample Customer C</span><span class="row-when">39 days over</span></div>
+            <p class="row-reason">Oil change · 2020 Kia Telluride</p>
+            <p class="row-flags"><span class="flag flag-ok"><svg class="ico ico-sm"><use href="#i-message"/></svg>Text OK</span><span class="row-phone">(208) 555-0119</span></p>
+          </li>
+          <li class="row" data-id="d" role="option" tabindex="-1">
+            <div class="row-top"><span class="row-name">Sample Customer D</span><span class="row-when">31 days over</span></div>
+            <p class="row-reason">Oil change · 2002 Toyota Tacoma</p>
+            <p class="row-flags"><span class="flag"><svg class="ico ico-sm"><use href="#i-lock"/></svg>Call only</span><span class="row-phone">(208) 555-0163</span></p>
+          </li>
+          <li class="row" data-id="e" role="option" tabindex="-1">
+            <div class="row-top"><span class="row-name">Sample Customer E</span><span class="row-when">30 days over</span></div>
+            <p class="row-reason">Oil change · 2012 Subaru Forester</p>
+            <p class="row-flags"><span class="flag flag-ok"><svg class="ico ico-sm"><use href="#i-message"/></svg>Text OK</span><span class="row-phone">(208) 555-0128</span></p>
+          </li>
+        </ol>
+        <div class="list-clear" data-only="done">
+          <p class="list-clear-title">No one left in this batch</p>
+          <p>Worked customers are under Worked recently.</p>
+        </div>
+
+        <footer class="list-foot">
+          <button class="disclose"><svg class="ico ico-sm"><use href="#i-chevron"/></svg>Worked recently <span data-only="withheld empty">41</span><span data-only="text">42</span><span data-only="done">66</span></button>
+          <div class="keys">
+            <span><kbd>↑</kbd><kbd>↓</kbd> move</span>
+            <button class="keys-btn" popovertarget="shortcuts" aria-keyshortcuts="?"><kbd aria-hidden="true">?</kbd> Shortcuts</button>
+          </div>
+        </footer>
+      </section>
+
+      <!-- Detail pane: consent withheld -->
+      <section class="detail" data-only="withheld" aria-labelledby="d-a">
+        <div class="detail-scroll">
+          <header class="d-head">
+            <div class="d-who">
+              <h2 id="d-a">Sample Customer A</h2>
+              <p class="d-meta">2014 Ford Expedition · Last visit Mar 14, 2026 · 1 of 5</p>
+              <p class="d-reason"><strong>Oil change overdue by 40 days</strong> · It was due Sep 19, 2026</p>
+            </div>
+            <div class="d-contact">
+              <a class="phone" href="tel:+12085550142"><svg class="ico"><use href="#i-phone"/></svg>(208) 555-0142</a>
+              <button class="btn btn-secondary btn-sm"><svg class="ico ico-sm"><use href="#i-copy"/></svg>Copy number</button>
+            </div>
+          </header>
+
+          <section class="d-block" aria-labelledby="s-a">
+            <div class="d-block-head">
+              <h3 id="s-a">Call script</h3>
+              <button class="btn btn-secondary btn-sm" aria-keyshortcuts="s"><svg class="ico ico-sm"><use href="#i-copy"/></svg>Copy script <kbd aria-hidden="true">S</kbd></button>
+            </div>
+            <p class="script">Hi, this is <mark>your name</mark> at Erber Auto in Moscow. I'm calling for Sample Customer A about the 2014 Ford Expedition. Our records show it's past due for an oil change; it was due around September 19. Would you like to get it on the schedule this week?</p>
+          </section>
+
+          <section class="d-block" aria-labelledby="t-a">
+            <div class="d-block-head"><h3 id="t-a">Text draft</h3></div>
+            <div class="consent" role="note">
+              <svg class="ico"><use href="#i-lock"/></svg>
+              <div>
+                <p><strong class="consent-title">Call only.</strong> No text consent on file. Update it in the customer record if they agree.</p>
+              </div>
+            </div>
+          </section>
+        </div>
+
+        <footer class="actions" aria-label="Log the outcome">
+          <div class="actions-row">
+            <button class="btn btn-primary btn-lg" aria-keyshortcuts="c"><svg class="ico"><use href="#i-phone"/></svg>Called <kbd aria-hidden="true">C</kbd></button>
+            <button class="btn btn-secondary btn-lg" aria-keyshortcuts="b"><svg class="ico"><use href="#i-check"/></svg>Booked <kbd aria-hidden="true">B</kbd></button>
+            <button class="btn btn-ghost btn-lg" aria-keyshortcuts="n">Not interested <kbd aria-hidden="true">N</kbd></button>
+          </div>
+          <div class="snooze" role="group" aria-labelledby="sz-a">
+            <span id="sz-a" class="snooze-label"><svg class="ico ico-sm"><use href="#i-clock"/></svg>Snooze</span>
+            <div class="seg">
+              <button aria-keyshortcuts="1">1 day <kbd aria-hidden="true">1</kbd></button>
+              <button aria-keyshortcuts="7">7 days <kbd aria-hidden="true">7</kbd></button>
+              <button>30 days</button>
+              <button><svg class="ico ico-sm"><use href="#i-calendar"/></svg>Pick a date</button>
+            </div>
+          </div>
+        </footer>
+      </section>
+
+      <!-- Detail pane: text allowed, previous outcome just logged -->
+      <section class="detail" data-only="text" aria-labelledby="d-b">
+        <div class="detail-scroll">
+          <header class="d-head">
+            <div class="d-who">
+              <h2 id="d-b">Sample Customer B</h2>
+              <p class="d-meta">2020 GMC Yukon XL · Last visit Feb 2, 2026 · 1 of 4</p>
+              <p class="d-reason"><strong>Oil change overdue by 40 days</strong> · It was due Sep 19, 2026</p>
+            </div>
+            <div class="d-contact">
+              <a class="phone" href="tel:+12085550177"><svg class="ico"><use href="#i-phone"/></svg>(208) 555-0177</a>
+              <button class="btn btn-secondary btn-sm"><svg class="ico ico-sm"><use href="#i-copy"/></svg>Copy number</button>
+            </div>
+          </header>
+
+          <section class="d-block" aria-labelledby="s-b">
+            <div class="d-block-head">
+              <h3 id="s-b">Call script</h3>
+              <button class="btn btn-secondary btn-sm" aria-keyshortcuts="s"><svg class="ico ico-sm"><use href="#i-copy"/></svg>Copy script <kbd aria-hidden="true">S</kbd></button>
+            </div>
+            <p class="script">Hi, this is <mark>your name</mark> at Erber Auto in Moscow. I'm calling for Sample Customer B about the 2020 GMC Yukon XL. It's past due for an oil change; it was due around September 19. Can we get it on the schedule this week?</p>
+          </section>
+
+          <section class="d-block" aria-labelledby="t-b">
+            <div class="d-block-head">
+              <h3 id="t-b">Text draft</h3>
+              <button class="btn btn-secondary btn-sm" aria-keyshortcuts="t"><svg class="ico ico-sm"><use href="#i-copy"/></svg>Copy text <kbd aria-hidden="true">T</kbd></button>
+            </div>
+            <p class="script">Hi from Erber Auto in Moscow. Your 2020 GMC Yukon XL is due for an oil change (it was due Sep 19). Call us at (208) 555-0100 or reply to book a time. Reply STOP to opt out.</p>
+            <p class="d-note"><svg class="ico ico-sm"><use href="#i-message"/></svg>Text consent on file since Jun 2024.</p>
+          </section>
+        </div>
+
+        <footer class="actions" aria-label="Log the outcome">
+          <div class="actions-row">
+            <button class="btn btn-primary btn-lg" aria-keyshortcuts="c"><svg class="ico"><use href="#i-phone"/></svg>Called <kbd aria-hidden="true">C</kbd></button>
+            <button class="btn btn-secondary btn-lg" aria-keyshortcuts="b"><svg class="ico"><use href="#i-check"/></svg>Booked <kbd aria-hidden="true">B</kbd></button>
+            <button class="btn btn-ghost btn-lg" aria-keyshortcuts="n">Not interested <kbd aria-hidden="true">N</kbd></button>
+          </div>
+          <div class="snooze" role="group" aria-labelledby="sz-b">
+            <span id="sz-b" class="snooze-label"><svg class="ico ico-sm"><use href="#i-clock"/></svg>Snooze</span>
+            <div class="seg">
+              <button aria-keyshortcuts="1">1 day <kbd aria-hidden="true">1</kbd></button>
+              <button aria-keyshortcuts="7">7 days <kbd aria-hidden="true">7</kbd></button>
+              <button>30 days</button>
+              <button><svg class="ico ico-sm"><use href="#i-calendar"/></svg>Pick a date</button>
+            </div>
+          </div>
+        </footer>
+      </section>
+
+      <!-- Detail pane: batch done -->
+      <section class="detail detail-done" data-only="done" aria-labelledby="done-h">
+        <div class="done">
+          <span class="done-ico"><svg class="ico"><use href="#i-check"/></svg></span>
+          <h2 id="done-h">Batch done</h2>
+          <p>You worked all 25 due-service customers in this batch. 263 are still open.</p>
+          <dl class="tally">
+            <div><dt>Booked</dt><dd>6</dd></div>
+            <div><dt>Called</dt><dd>12</dd></div>
+            <div><dt>Snoozed</dt><dd>4</dd></div>
+            <div><dt>Not interested</dt><dd>3</dd></div>
+          </dl>
+          <div class="done-actions">
+            <button class="btn btn-primary btn-lg" aria-keyshortcuts="Enter">Start next 25 <kbd aria-hidden="true">Enter</kbd></button>
+            <button class="btn btn-ghost btn-lg">Review this batch</button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    </div>
+
+    <div class="toast" data-only="text" role="status">
+      <svg class="ico"><use href="#i-check"/></svg>
+      <span><strong>Sample Customer A</strong> logged as Booked</span>
+      <button class="toast-undo" aria-keyshortcuts="u">Undo <kbd aria-hidden="true">U</kbd></button>
+    </div>
+  </main>
+</div>
+
+<div id="shortcuts" class="sheet" popover aria-labelledby="sheet-h">
+  <div class="sheet-head">
+    <h2 id="sheet-h">Keyboard shortcuts</h2>
+    <button class="btn btn-ghost btn-icon" popovertarget="shortcuts" popovertargetaction="hide" aria-label="Close">
+      <svg class="ico" aria-hidden="true"><use href="#i-close"/></svg>
+    </button>
+  </div>
+  <dl class="sheet-list">
+    <div><dt>Next or previous customer</dt><dd><kbd>↑</kbd><kbd>↓</kbd></dd></div>
+    <div><dt>Log Called</dt><dd><kbd>C</kbd></dd></div>
+    <div><dt>Log Booked</dt><dd><kbd>B</kbd></dd></div>
+    <div><dt>Log Not interested</dt><dd><kbd>N</kbd></dd></div>
+    <div><dt>Snooze 1 day / 7 days</dt><dd><kbd>1</kbd><kbd>7</kbd></dd></div>
+    <div><dt>Copy call script / text draft</dt><dd><kbd>S</kbd><kbd>T</kbd></dd></div>
+    <div><dt>Undo the last outcome (8 seconds)</dt><dd><kbd>U</kbd></dd></div>
+    <div><dt>Start the next batch</dt><dd><kbd>Enter</kbd></dd></div>
+    <div><dt>Show or hide this list</dt><dd><kbd>?</kbd></dd></div>
+  </dl>
+  <p class="sheet-foot">Every outcome removes the customer from the list. Undo brings them back.</p>
+</div>
+
+<script>
+  const requested = new URLSearchParams(location.search).get('state') || 'withheld';
+  const state = requested === 'shortcuts' ? 'withheld' : requested;
+  document.body.dataset.state = state;
+  document.querySelectorAll('[data-only]').forEach(el => {
+    el.hidden = !el.dataset.only.split(' ').includes(state);
+  });
+  const tab = state === 'empty' ? 'declined' : 'due';
+  document.querySelectorAll('[role=tab]').forEach(t => {
+    t.setAttribute('aria-selected', t.dataset.tab === tab);
+    t.tabIndex = t.dataset.tab === tab ? 0 : -1;
+  });
+  document.getElementById('outreach-panel').setAttribute('aria-labelledby', 'tab-' + tab);
+  const selected = { withheld: 'a', text: 'b' }[state];
+  document.querySelectorAll('.row').forEach(r => {
+    const dismissed = state === 'done' || (state === 'text' && r.dataset.id === 'a');
+    r.hidden = dismissed;
+    r.setAttribute('aria-selected', r.dataset.id === selected);
+  });
+  const first = document.querySelector('.row:not([hidden])');
+  if (first) document.querySelectorAll('.row').forEach(r => r.tabIndex = r === first ? 0 : -1);
+  if (requested === 'shortcuts') document.getElementById('shortcuts').showPopover();
+</script>
+</body>
+</html>
