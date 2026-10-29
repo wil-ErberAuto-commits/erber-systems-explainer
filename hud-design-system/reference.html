@@ -1,0 +1,360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Erber HUD design system · reference</title>
+<link rel="preload" href="fonts/GeneralSans-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="fonts/GeneralSans-Medium.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="fonts/GeneralSans-Semibold.otf" as="font" type="font/otf" crossorigin>
+<link rel="stylesheet" href="tokens.css">
+<link rel="stylesheet" href="components.css">
+<style>
+  /* Reference-page layout only (.spec-*). These are not components; pages must not use them. */
+  .spec-head { display: flex; flex-direction: column; gap: var(--space-2); padding-bottom: var(--space-8); }
+  .spec { padding: var(--space-10) 0; border-top: var(--border); display: flex; flex-direction: column; gap: var(--space-6); }
+  .spec > header { display: flex; flex-direction: column; gap: var(--space-1); }
+  .spec-group { display: flex; flex-direction: column; gap: var(--space-3); }
+  .spec-swatches { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-3); }
+  .spec-swatch { display: grid; grid-template-columns: var(--tile) minmax(0, 1fr); gap: var(--space-3); align-items: center; }
+  .spec-chip { width: var(--tile); height: var(--tile); border-radius: var(--radius-md); border: var(--border); }
+  .spec-name { font-weight: var(--weight-medium); }
+  .spec-type { display: grid; grid-template-columns: 200px minmax(0, 1fr); align-items: baseline; gap: var(--space-6); padding: var(--space-3) 0; border-bottom: var(--border); }
+  .spec-scale { display: flex; align-items: flex-end; gap: var(--space-6); }
+  .spec-bar { display: flex; flex-direction: column; gap: var(--space-2); align-items: flex-start; }
+  .spec-bar span { display: block; height: var(--space-6); background: var(--color-accent-tint); border: var(--border); border-radius: var(--radius-sm); }
+  .spec-radii { display: flex; gap: var(--space-6); flex-wrap: wrap; }
+  .spec-box { width: 120px; height: 72px; display: grid; place-items: center; background: var(--color-surface); border: var(--border); font-size: var(--text-xs); color: var(--color-text-muted); }
+  .spec-cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-6); align-items: start; }
+  .spec-stack { display: flex; flex-direction: column; gap: var(--space-4); }
+  .spec-frame { background: var(--color-surface); border: var(--border); border-radius: var(--radius-lg); }
+  .spec-pad { padding: var(--space-4); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-check-circle" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/></symbol>
+    <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></symbol>
+    <symbol id="i-phone-missed" viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/><path d="m16 2 6 6M22 2l-6 6"/></symbol>
+    <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></symbol>
+    <symbol id="i-megaphone" viewBox="0 0 24 24"><path d="M3 11v2a1 1 0 0 0 1 1h3l6 4V6l-6 4H4a1 1 0 0 0-1 1zM17 8.5a5 5 0 0 1 0 7"/></symbol>
+    <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/></symbol>
+    <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.8-3.8a6 6 0 0 1-7.9 7.9l-6.9 6.9a2.1 2.1 0 0 1-3-3l6.9-6.9a6 6 0 0 1 7.9-7.9z"/></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M2 14h4M10 8h4M18 16h4"/></symbol>
+    <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 6 6 6-6 6"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+    <symbol id="i-car" viewBox="0 0 24 24"><path d="M3 13 5 8a2 2 0 0 1 1.9-1.4h10.2A2 2 0 0 1 19 8l2 5v4a1 1 0 0 1-1 1h-1M3 13v4a1 1 0 0 0 1 1h1M3 13h18M9 18h6"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></symbol>
+    <symbol id="i-note" viewBox="0 0 24 24"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9zM14 3v6h6M8 13h8M8 17h5"/></symbol>
+    <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="17" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-bell-off" viewBox="0 0 24 24"><path d="M8.7 3A6 6 0 0 1 18 8c0 2.4.4 4.2 1 5.6M17 17H3s3-2 3-9c0-.6.1-1.2.3-1.8M10.3 21a1.9 1.9 0 0 0 3.4 0M2 2l20 20"/></symbol>
+    <symbol id="i-alert" viewBox="0 0 24 24"><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0zM12 9v4M12 17h.01"/></symbol>
+    <symbol id="i-popout" viewBox="0 0 24 24"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/></symbol>
+    <symbol id="i-database" viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></symbol>
+    <symbol id="i-message" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></symbol>
+    <symbol id="i-inbox" viewBox="0 0 24 24"><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.5 5.1 2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.5-6.9A2 2 0 0 0 16.8 4H7.2a2 2 0 0 0-1.7 1.1z"/></symbol>
+    <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+    <symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5M12 7v5l4 2"/></symbol>
+  </defs>
+</svg>
+
+<div class="shell">
+  <header class="topbar">
+    <a href="#" class="logo"><img src="assets/erber-logo-navy.png" alt="Erber Auto" width="131" height="18"></a>
+    <nav class="topnav" aria-label="Apps">
+      <a href="#">Front desk</a>
+      <a href="#" aria-current="page">Caller HUD</a>
+      <a href="#">Feedback</a>
+      <a href="#">Parts</a>
+      <a href="#">Systems</a>
+    </nav>
+    <div class="topbar-tools">
+      <button class="btn btn-ghost"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-bell-off"/></svg>Chime off</button>
+      <button class="btn btn-ghost btn-icon" aria-label="Pop out"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-popout"/></svg></button>
+      <span class="topbar-sep" aria-hidden="true"></span>
+      <span class="topbar-user">Sample Staff</span>
+      <button class="btn btn-ghost">Sign out</button>
+    </div>
+  </header>
+
+  <aside class="sidebar" aria-label="Sidebar">
+    <a href="#" class="side-item side-item-2line">
+      <span class="chip chip-live"><span class="dot" aria-hidden="true"></span>Live</span>
+      <span>Sample Customer A<span class="side-sub">On a call · 2:14</span></span>
+    </a>
+    <p class="side-label">Views</p>
+    <a href="#" class="side-item" aria-current="page"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg>Current caller</a>
+    <a href="#" class="side-item"><svg class="ico" aria-hidden="true"><use href="#i-home"/></svg>Overview<span class="side-count">0</span></a>
+    <a href="#" class="side-item"><svg class="ico" aria-hidden="true"><use href="#i-megaphone"/></svg>Outreach<span class="side-count">986</span></a>
+    <p class="side-label">Recent customers <svg class="ico ico-sm" aria-hidden="true"><use href="#i-chevron-down"/></svg></p>
+    <a href="#" class="side-item">Sample Customer A<span class="side-count">12:17 PM</span></a>
+    <a href="#" class="side-item">Sample Caller 1<span class="side-count">11:02 AM</span></a>
+    <a href="#" class="side-item">Sample Fleet Co.<span class="side-count">10:40 AM</span></a>
+    <a href="#" class="side-item">Sample Caller 2<span class="side-count">9:55 AM</span></a>
+    <p class="side-label">Saved searches <svg class="ico ico-sm" aria-hidden="true"><use href="#i-chevron-down"/></svg></p>
+    <a href="#" class="side-item">Declined brakes, 90 days</a>
+    <a href="#" class="side-item">Fleet accounts</a>
+    <div class="side-foot">
+      <span class="avatar" aria-hidden="true">SS</span>
+      <div><p class="side-foot-name">Sample Staff</p><p class="meta">Front desk</p></div>
+    </div>
+  </aside>
+
+  <main class="content">
+    <header class="spec-head">
+      <h1 class="page-title">HUD design system</h1>
+      <p class="lede">Light mode. Every page builds from tokens.css and components.css only. Sample data is fake.</p>
+    </header>
+
+    <!-- Colour -->
+    <section class="spec" aria-labelledby="h-colour">
+      <header><h2 class="section-title" id="h-colour">Colour</h2><p class="lede">Neutral surfaces, one navy accent. Status colours appear only inside chips and dots. Red is for urgent and alerts only.</p></header>
+      <div class="spec-group">
+        <h3 class="group-title">Surfaces and borders</h3>
+        <div class="spec-swatches">
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-canvas)"></span><div><p class="spec-name">canvas</p><p class="meta">#F7F8FA · main area</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-sidebar)"></span><div><p class="spec-name">sidebar</p><p class="meta">#F0F2F5</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-surface)"></span><div><p class="spec-name">surface</p><p class="meta">#FFFFFF · cards, panels</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-fill)"></span><div><p class="spec-name">fill</p><p class="meta">#ECEEF2 · hover, track</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-fill-strong)"></span><div><p class="spec-name">fill-strong</p><p class="meta">#E2E5EB · pressed</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-border)"></span><div><p class="spec-name">border</p><p class="meta">#E2E5EB · dividers</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-border-strong)"></span><div><p class="spec-name">border-strong</p><p class="meta">#C3C9D4 · secondary</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-border-input)"></span><div><p class="spec-name">border-input</p><p class="meta">#878F9E · inputs, 3.2:1</p></div></div>
+        </div>
+      </div>
+      <div class="spec-group">
+        <h3 class="group-title">Text and accent</h3>
+        <div class="spec-swatches">
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-text-strong)"></span><div><p class="spec-name">text-strong</p><p class="meta">#050D57 · titles</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-text)"></span><div><p class="spec-name">text</p><p class="meta">#161B26 · body</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-text-muted)"></span><div><p class="spec-name">text-muted</p><p class="meta">#5B6474 · metadata</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-text-disabled)"></span><div><p class="spec-name">text-disabled</p><p class="meta">#8C94A3 · disabled only</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-accent)"></span><div><p class="spec-name">accent</p><p class="meta">#0F2F66 · primary, selected</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-accent-hover)"></span><div><p class="spec-name">accent-hover</p><p class="meta">#050D57</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-accent-tint)"></span><div><p class="spec-name">accent-tint</p><p class="meta">#E7ECF5 · selected bg</p></div></div>
+        </div>
+      </div>
+      <div class="spec-group">
+        <h3 class="group-title">Status</h3>
+        <div class="spec-swatches">
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-live)"></span><div><p class="spec-name">live</p><p class="meta">#17703A on #E6F4EA</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-warning-dot)"></span><div><p class="spec-name">warning</p><p class="meta">#7A4B00 on #FFF3D6</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-urgent)"></span><div><p class="spec-name">urgent</p><p class="meta">#EC3013 · dots, icon</p></div></div>
+          <div class="spec-swatch"><span class="spec-chip" style="background:var(--color-urgent-text)"></span><div><p class="spec-name">urgent-text</p><p class="meta">#B3200C on #FDECE8</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Type -->
+    <section class="spec" aria-labelledby="h-type">
+      <header><h2 class="section-title" id="h-type">Type</h2><p class="lede">General Sans at five sizes and three weights (400, 500, 600). No Bold file ships, so nothing is heavier than Semibold.</p></header>
+      <div>
+        <div class="spec-type"><p class="meta">xl · 28 / 600 · page title</p><p class="page-title">Sample Customer A</p></div>
+        <div class="spec-type"><p class="meta">lg · 20 / 600 · section, panel</p><p class="section-title">Why they're calling</p></div>
+        <div class="spec-type"><p class="meta">md · 16 / 600 · group, empty title</p><p class="group-title">Recent calls</p></div>
+        <div class="spec-type"><p class="meta">sm · 14 / 400–600 · body, controls</p><p>Wants to book the overdue oil change, Friday before 8 AM.</p></div>
+        <div class="spec-type"><p class="meta">xs · 13 / 400–500 · metadata</p><p class="meta">Customer since 2024 · 7 visits · Last visit Sep 22, 2026</p></div>
+      </div>
+    </section>
+
+    <!-- Spacing, radius, borders -->
+    <section class="spec" aria-labelledby="h-space">
+      <header><h2 class="section-title" id="h-space">Spacing, radius and borders</h2><p class="lede">A 4px base with eight steps. Tight inside a group, generous between groups. Soft 1px borders do the separating; one overlay shadow exists, for the toast and popovers.</p></header>
+      <div class="spec-scale">
+        <div class="spec-bar"><span style="width:var(--space-1)"></span><p class="meta">1 · 4</p></div>
+        <div class="spec-bar"><span style="width:var(--space-2)"></span><p class="meta">2 · 8</p></div>
+        <div class="spec-bar"><span style="width:var(--space-3)"></span><p class="meta">3 · 12</p></div>
+        <div class="spec-bar"><span style="width:var(--space-4)"></span><p class="meta">4 · 16</p></div>
+        <div class="spec-bar"><span style="width:var(--space-6)"></span><p class="meta">6 · 24</p></div>
+        <div class="spec-bar"><span style="width:var(--space-8)"></span><p class="meta">8 · 32</p></div>
+        <div class="spec-bar"><span style="width:var(--space-10)"></span><p class="meta">10 · 40</p></div>
+        <div class="spec-bar"><span style="width:var(--space-12)"></span><p class="meta">12 · 48</p></div>
+      </div>
+      <div class="spec-radii">
+        <div class="spec-box" style="border-radius:var(--radius-sm)">radius-sm · 6</div>
+        <div class="spec-box" style="border-radius:var(--radius-md)">radius-md · 8</div>
+        <div class="spec-box" style="border-radius:var(--radius-lg)">radius-lg · 12</div>
+        <div class="spec-box" style="border-radius:var(--radius-lg);border:var(--border-strong)">border-strong</div>
+        <div class="spec-box" style="border-radius:var(--radius-lg);box-shadow:var(--shadow-overlay)">shadow-overlay</div>
+      </div>
+    </section>
+
+    <!-- Buttons -->
+    <section class="spec" aria-labelledby="h-buttons">
+      <header><h2 class="section-title" id="h-buttons">Buttons</h2><p class="lede">There is one primary button per view; secondary is for supporting actions and ghost for everything else. The standard height is 40, and 32 is for compact spots inside cards and rows.</p></header>
+      <div class="btn-row">
+        <button class="btn btn-primary"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-wrench"/></svg>Create RO <span class="kbd" aria-hidden="true">R</span></button>
+        <button class="btn btn-secondary"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-calendar"/></svg>Follow up <span class="kbd" aria-hidden="true">F</span></button>
+        <button class="btn btn-ghost"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-note"/></svg>Add note <span class="kbd" aria-hidden="true">N</span></button>
+        <button class="btn btn-ghost btn-icon" aria-label="Filters"><svg class="ico" aria-hidden="true"><use href="#i-sliders"/></svg></button>
+        <button class="btn btn-secondary btn-sm"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-plus"/></svg>Add</button>
+        <button class="btn btn-secondary btn-sm btn-icon" aria-label="Add"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-plus"/></svg></button>
+        <button class="btn btn-primary" disabled>Save note</button>
+      </div>
+      <p class="meta">Primary · Secondary · Ghost · Icon (ghost) · Small secondary · Small icon · Disabled</p>
+    </section>
+
+    <!-- Segmented + search -->
+    <section class="spec" aria-labelledby="h-seg">
+      <header><h2 class="section-title" id="h-seg">Segmented tabs and search</h2><p class="lede">The segmented control is the only tab style. It's used for switching views on a page and for picking a mode inside a panel. Search is a standard input with a leading icon and an optional key hint.</p></header>
+      <div class="spec-cols">
+        <div class="spec-stack">
+          <div class="seg" role="tablist" aria-label="Timeline filter">
+            <button role="tab" aria-selected="true">All <span class="count">8</span></button>
+            <button role="tab" aria-selected="false" tabindex="-1">Visits <span class="count">2</span></button>
+            <button role="tab" aria-selected="false" tabindex="-1">Declined <span class="count">1</span></button>
+            <button role="tab" aria-selected="false" tabindex="-1">Calls &amp; notes <span class="count">6</span></button>
+          </div>
+          <div class="seg" role="radiogroup" aria-label="Note type">
+            <button role="radio" aria-checked="true">Note</button>
+            <button role="radio" aria-checked="false" tabindex="-1">Confirmed with customer</button>
+          </div>
+        </div>
+        <div class="search" role="search">
+          <svg class="ico ico-sm" aria-hidden="true"><use href="#i-search"/></svg>
+          <input type="search" aria-label="Find a customer" placeholder="Name, phone or RO #">
+          <span class="kbd" aria-hidden="true">/</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chips -->
+    <section class="spec" aria-labelledby="h-chips">
+      <header><h2 class="section-title" id="h-chips">Chips and status</h2><p class="lede">A status chip is a dot plus a short label, and its colour comes only from the status tokens. A count chip is muted, never coloured.</p></header>
+      <div class="btn-row">
+        <span class="chip chip-live" role="status"><span class="dot" aria-hidden="true"></span>Live call 2:14</span>
+        <span class="chip chip-ended"><span class="dot" aria-hidden="true"></span>Call ended · 0:05</span>
+        <span class="chip chip-warning"><span class="dot" aria-hidden="true"></span>Oil change 40 days overdue</span>
+        <span class="chip chip-urgent"><span class="dot" aria-hidden="true"></span>Missed call · 4:51 PM</span>
+        <span class="chip">Prefers calls</span>
+        <span class="chip chip-count">986</span>
+      </div>
+      <p class="meta">Live call · Call ended · Overdue (warning) · Urgent (red, real urgency only) · Tag · Count</p>
+    </section>
+
+    <!-- Cards -->
+    <section class="spec" aria-labelledby="h-cards">
+      <header><h2 class="section-title" id="h-cards">Cards</h2><p class="lede">A compact card has an icon tile, title, subtitle, one line of metadata and one action. Use cards for a set of peer items, never as page structure, and never put a card inside another.</p></header>
+      <div class="card-grid">
+        <article class="card">
+          <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-phone"/></svg></span>
+          <div><p class="card-title">Phone system</p><p class="card-sub">Shows the caller on this screen when the line rings.</p><p class="card-meta">Connected · 2 lines</p></div>
+          <button class="btn btn-secondary btn-sm btn-icon" aria-label="Phone system connected"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg></button>
+        </article>
+        <article class="card">
+          <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-database"/></svg></span>
+          <div><p class="card-title">Shop mirror</p><p class="card-sub">Local copy of customers, vehicles and ROs for fast search.</p><p class="card-meta">Synced 12:02 PM</p></div>
+          <button class="btn btn-secondary btn-sm btn-icon" aria-label="Shop mirror connected"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-check"/></svg></button>
+        </article>
+        <article class="card">
+          <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-message"/></svg></span>
+          <div><p class="card-title">Text messages</p><p class="card-sub">Send reminders to customers who agreed to texts.</p><p class="card-meta">Not set up</p></div>
+          <button class="btn btn-secondary btn-sm btn-icon" aria-label="Set up text messages"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-plus"/></svg></button>
+        </article>
+        <article class="card">
+          <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-wrench"/></svg></span>
+          <div><p class="card-title">Parts lookup</p><p class="card-sub">Check price and stock from the RO without leaving the HUD.</p><p class="card-meta">Not set up</p></div>
+          <button class="btn btn-secondary btn-sm btn-icon" aria-label="Set up parts lookup"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-plus"/></svg></button>
+        </article>
+      </div>
+    </section>
+
+    <!-- List rows -->
+    <section class="spec" aria-labelledby="h-rows">
+      <header><h2 class="section-title" id="h-rows">List rows</h2><p class="lede">Rows sit in one bordered list container, separated by 1px dividers. A selected row gets the accent tint and navy title; there's no coloured side stripe.</p></header>
+      <ul class="list" role="listbox" aria-label="Recent customers">
+        <li class="row" role="option" aria-selected="true"><span class="avatar" aria-hidden="true">A</span><div><p class="row-title">Sample Customer A</p><p class="row-meta">(208) 555-0142 · 2014 Ford Expedition</p></div><div class="row-end"><span class="chip chip-live"><span class="dot" aria-hidden="true"></span>Live call</span>12:17 PM</div></li>
+        <li class="row" role="option" aria-selected="false"><span class="avatar" aria-hidden="true">1</span><div><p class="row-title">Sample Caller 1</p><p class="row-meta">(208) 555-0101 · 2019 Subaru Outback</p></div><div class="row-end"><span class="chip chip-warning"><span class="dot" aria-hidden="true"></span>Overdue</span>11:02 AM</div></li>
+        <li class="row" role="option" aria-selected="false"><span class="avatar" aria-hidden="true">F</span><div><p class="row-title">Sample Fleet Co.</p><p class="row-meta">(208) 555-0103 · 6 vehicles</p></div><div class="row-end">10:40 AM</div></li>
+        <li class="row" role="option" aria-selected="false"><span class="avatar" aria-hidden="true">?</span><div><p class="row-title">Unknown caller</p><p class="row-meta">(208) 555-0199 · No match</p></div><div class="row-end"><span class="chip chip-urgent"><span class="dot" aria-hidden="true"></span>Missed</span>9:55 AM</div></li>
+      </ul>
+    </section>
+
+    <!-- Timeline -->
+    <section class="spec" aria-labelledby="h-tl">
+      <header><h2 class="section-title" id="h-tl">Timeline row</h2><p class="lede">Each row has the date, an icon, a title with optional status chip, and metadata. Repeated events with nothing to say collapse into one row.</p></header>
+      <ol class="timeline">
+        <li class="tl-row"><time class="tl-date">Oct 23</time><span class="tl-icon"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-note"/></svg></span><div><p class="tl-title">Note · Sample Staff</p><p class="tl-body">Asked about the oil change price. Said they'd call back to book.</p></div><span></span></li>
+        <li class="tl-row"><time class="tl-date">Oct 16–20</time><span class="tl-icon"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-phone"/></svg></span><div><p class="tl-title">3 inbound calls</p><p class="tl-meta">No notes</p></div><button class="btn btn-ghost btn-sm" aria-expanded="false" aria-label="Show 3 inbound calls">Show</button></li>
+        <li class="tl-row"><time class="tl-date">Oct 2</time><span class="tl-icon tl-icon-urgent"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-phone-missed"/></svg></span><div><p class="tl-title">Missed call <span class="chip chip-urgent"><span class="dot" aria-hidden="true"></span>No voicemail</span></p><p class="tl-meta">4:51 PM · (208) 555-0199</p></div><span></span></li>
+        <li class="tl-row"><time class="tl-date">Mar 14</time><span class="tl-icon"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-wrench"/></svg></span><div><p class="tl-title">Declined · Front brake pads <span class="chip chip-warning"><span class="dot" aria-hidden="true"></span>Declined</span></p><p class="tl-meta">Quoted $289.00 on RO #24410</p></div><a class="link" href="#">RO #24410</a></li>
+      </ol>
+    </section>
+
+    <!-- Inputs -->
+    <section class="spec" aria-labelledby="h-input">
+      <header><h2 class="section-title" id="h-input">Text input</h2><p class="lede">The label sits above the field and the help text below it. An error names the problem and how to fix it. The composer is the multi-line input, with its actions underneath.</p></header>
+      <div class="spec-cols">
+        <div class="spec-stack">
+          <div class="field"><label for="f1">Why they're calling</label><input class="input" id="f1" placeholder="What do they need?"><p class="help">Enter saves.</p></div>
+          <div class="field"><label for="f2">Mileage</label><input class="input is-focus" id="f2" value="112,480"><p class="help">Focused</p></div>
+          <div class="field is-error"><label for="f3">Phone</label><input class="input" id="f3" value="208 555" aria-invalid="true" aria-describedby="f3h"><p class="help" id="f3h"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-alert"/></svg>Enter all 10 digits, like (208) 555-0142.</p></div>
+          <div class="field"><label for="f4">Customer since</label><input class="input" id="f4" value="2024" disabled><p class="help">Set from the shop system.</p></div>
+        </div>
+        <div class="composer">
+          <label class="sr" for="c1">Add a note</label>
+          <textarea id="c1" rows="2" placeholder="Add a note about this call…"></textarea>
+          <div class="composer-bar">
+            <div class="seg" role="radiogroup" aria-label="Note type">
+              <button role="radio" aria-checked="true">Note</button>
+              <button role="radio" aria-checked="false" tabindex="-1">Confirmed</button>
+            </div>
+            <button class="btn btn-primary btn-sm">Save note <span class="kbd" aria-hidden="true">⌘↵</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Toast + empty -->
+    <section class="spec" aria-labelledby="h-feedback">
+      <header><h2 class="section-title" id="h-feedback">Toast and empty state</h2><p class="lede">The toast confirms an action and offers Undo; it's white with the one overlay shadow. The empty state says what will appear and gives one next step.</p></header>
+      <div class="spec-cols">
+        <div><div class="toast" role="status"><svg class="ico" aria-hidden="true"><use href="#i-check-circle"/></svg><span class="toast-text">Logged as Booked</span><button class="btn btn-ghost btn-sm">Undo <span class="kbd" aria-hidden="true">U</span></button><button class="btn btn-ghost btn-sm btn-icon" aria-label="Dismiss"><svg class="ico ico-sm" aria-hidden="true"><use href="#i-x"/></svg></button></div></div>
+        <div class="spec-frame">
+          <div class="empty">
+            <span class="tile"><svg class="ico" aria-hidden="true"><use href="#i-inbox"/></svg></span>
+            <p class="empty-title">No history yet</p>
+            <p class="empty-body">Notes and ROs for this customer will show up here. This call is logged when it ends.</p>
+            <button class="btn btn-secondary">Add a note</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="panel" aria-label="Caller details">
+    <div class="panel-head"><h2 class="section-title">Caller</h2><span class="chip chip-live"><span class="dot" aria-hidden="true"></span>Live call 2:14</span></div>
+    <section class="panel-group" aria-label="Line">
+      <p class="panel-label">Line <svg class="ico ico-sm" aria-hidden="true"><use href="#i-chevron-down"/></svg></p>
+      <dl>
+        <div class="kv"><dt>Number</dt><dd>(208) 555-0142</dd></div>
+        <div class="kv"><dt>Caller ID</dt><dd>SAMPLE CUST A</dd></div>
+        <div class="kv"><dt>Type</dt><dd>Mobile</dd></div>
+      </dl>
+    </section>
+    <section class="panel-group" aria-label="Customer">
+      <p class="panel-label">Customer <a class="link" href="#">Open record</a></p>
+      <dl>
+        <div class="kv"><dt>Customer since</dt><dd>2024</dd></div>
+        <div class="kv"><dt>Visits</dt><dd>7</dd></div>
+        <div class="kv"><dt>Last visit</dt><dd>Sep 22, 2026</dd></div>
+        <div class="kv"><dt>Calls, 14 days</dt><dd>4</dd></div>
+      </dl>
+    </section>
+    <section class="panel-group" aria-label="Vehicle">
+      <p class="panel-label">Vehicle</p>
+      <dl>
+        <div class="kv"><dt>Vehicle</dt><dd>2014 Ford Expedition</dd></div>
+        <div class="kv"><dt>Mileage</dt><dd>112,480 mi</dd></div>
+        <div class="kv"><dt>Oil change</dt><dd><span class="chip chip-warning"><span class="dot" aria-hidden="true"></span>40 days overdue</span></dd></div>
+      </dl>
+    </section>
+  </aside>
+</div>
+</body>
+</html>
